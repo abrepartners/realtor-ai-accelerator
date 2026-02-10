@@ -12,9 +12,9 @@ const testimonials = [
     quote: "The AI follow-up scripts saved me 6 hours my first week. Finally, training that makes sense for real estate.",
   },
   {
-    name: "[Team Lead Name]",
-    brokerage: "[Brokerage Name]",
-    quote: "We rolled out the AI templates across our team the next day. Consistent messaging, faster response times, happier clients.",
+    name: "[Business Owner Name]",
+    brokerage: "[Company Name]",
+    quote: "I'm not in real estate, but the AI workflow templates cut my content creation time in half. This workshop is a game-changer for any business.",
   },
 ];
 
@@ -22,7 +22,7 @@ const SocialProof = () => (
   <section className="section-padding bg-background">
     <div className="mx-auto max-w-5xl">
       <h2 className="text-center text-2xl font-bold tracking-tight sm:text-3xl text-foreground">
-        What Agents Are Saying
+        What People Are Saying
       </h2>
       <div className="mt-10 grid gap-6 md:grid-cols-3">
         {testimonials.map((t, i) => (

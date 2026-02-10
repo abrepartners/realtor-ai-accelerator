@@ -29,7 +29,7 @@ const CRMBridge = ({ onBookDemo, onJoinWaitlist }: CRMBridgeProps) => (
           <div key={title} className="rounded-lg border border-primary-foreground/15 bg-primary-foreground/5 p-5 text-left">
             <Icon className="h-6 w-6 text-accent" />
             <p className="mt-3 text-sm font-semibold">{title}</p>
-            <p className="mt-1 text-xs opacity-70 leading-relaxed">{desc}</p>
+            <p className="mt-1 text-xs opacity-80 leading-relaxed">{desc}</p>
           </div>
         ))}
       </div>

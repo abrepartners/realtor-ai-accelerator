@@ -19,7 +19,7 @@ const FinalCTA = ({ onReserveSeat, onGetOutline }: FinalCTAProps) => (
           Get the Workshop Outline
         </Button>
       </div>
-      <p className="mt-6 text-xs tracking-wide opacity-60 sm:text-sm">
+      <p className="mt-6 text-xs tracking-wide opacity-80 sm:text-sm">
         Seats are limited to keep it interactive.
       </p>
     </div>
