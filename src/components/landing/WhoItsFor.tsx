@@ -1,7 +1,9 @@
 import { Check, X } from "lucide-react";
 
 const forItems = [
-  "Agents doing too much themselves",
+  "Realtors doing too much themselves",
+  "Business owners drowning in admin",
+  "Entrepreneurs who want faster follow-up",
   "Teams needing consistent messaging",
   "Anyone tired of content taking forever",
 ];
