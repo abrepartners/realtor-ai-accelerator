@@ -54,8 +54,9 @@ const RegistrationForm = ({ open, onOpenChange }: Props) => {
         {submitted ? (
           <div className="flex flex-col items-center gap-4 py-6 text-center">
             <CheckCircle className="h-12 w-12 text-accent" />
-            <p className="text-sm text-muted-foreground">We'll send you the details, calendar invite, and prep materials before the workshop.</p>
-            <a href="#" className="text-sm font-medium text-accent underline">[Add to Calendar]</a>
+            <p className="text-sm font-semibold text-foreground">March 24, 2026 · 10:00 AM – 12:00 PM CST</p>
+            <p className="text-sm text-muted-foreground">Your Google Meet link will be sent to your email. We'll also send prep materials and your prompt pack before the workshop.</p>
+            <a href="#" className="text-sm font-medium text-accent underline">Add to Google Calendar</a>
           </div>
         ) : (
           <Form {...form}>
