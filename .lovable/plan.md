@@ -1,123 +1,55 @@
 
 
-# Make the Landing Page More AI-Focused
-
-Transform the current workshop landing page from a generic training page into a visually distinct, AI-themed experience with deeper AI-specific content, visual effects, and expanded specifications.
+# Sponsor Logos, Broader Audience, and Text Contrast Fixes
 
 ---
 
-## 1. Visual Overhaul -- AI-Themed Design
+## 1. Add Sponsor Logo Bar
 
-**Color palette shift** in `src/index.css`:
-- Move from warm amber accent to a cool electric blue/cyan AI palette (e.g., `accent: 210 100% 55%`)
-- Add a subtle gradient mesh or radial glow effect behind the Hero section using CSS
-- Add a subtle animated grid/dot pattern background utility class for key sections
+Create a new visual strip showing the three sponsor logos with links. This will be placed in the Hero section beneath the trust strip text, or as a standalone strip between Hero and Social Proof.
 
-**New CSS animations** in `tailwind.config.ts` and `index.css`:
-- A slow "pulse-glow" keyframe for accent elements (mimicking an AI "thinking" indicator)
-- A "typing" cursor blink animation for the hero headline area
-- A "float" animation for icons in the feature cards
+**Sponsors with links:**
+- **Pinnacle** (user-uploads://Pinnacle_Logotype.png) -> https://map.realtyonegroup.com/real-estate-agent/41130/rj-hawk
+- **Eagle Bank Mortgage** (user-uploads://White_Logo_copy.png) -> https://www.eaglebank.com/lender/kim-leech/
+- **Avery and Bryant** (user-uploads://1080_logo.png) -> https://www.averyandbryant.com
 
----
-
-## 2. Hero Section Enhancements (`HeroSection.tsx`)
-
-- Add a small "Powered by AI" badge/pill above the headline
-- Update headline to include a typewriter-style visual treatment (static text, but styled with a blinking cursor at the end)
-- Add a subtle animated gradient background (CSS only, no JS animation library)
-- Expand bullets to 4, adding: "AI-powered market analysis and CMA talking points"
-- Add AI-specific tool mentions in the trust strip: "Uses ChatGPT, Claude, and Gemini workflows"
+Each logo will be a clickable link (opens in new tab), displayed in a horizontal row with "Sponsored by" label above. Logos will be sized consistently (max height ~40px) and have appropriate contrast handling depending on section background.
 
 ---
 
-## 3. Expanded "What You'll Learn" (`WhatYoullLearn.tsx`)
+## 2. Broaden Audience Messaging
 
-Add 2 more learning blocks (6 total) with deeper AI specs:
+Update copy across several components to make it clear this workshop is open to **all business professionals**, not just realtors:
 
-- **Block 5: "AI Tools Walkthrough"** -- Hands-on with ChatGPT, Claude, and Gemini for real estate; choosing the right tool for each task
-- **Block 6: "AI-Powered Lead Scoring + Market Insights"** -- Using AI to prioritize leads; generating neighborhood summaries and market snapshots
-
-Update existing block titles to be more AI-specific:
-- "AI Basics Realtors Actually Need" -> "Prompt Engineering for Real Estate"
-- "Workflow + Automation" -> "AI Automation + Smart Pipelines"
-
-Add more bullets per block (3 instead of 2) to deepen AI content.
+- **HeroSection.tsx**: Update subheadline and headline context to say "business" alongside "realtor." Update trust strip to mention "Open to realtors, entrepreneurs, and any business looking to leverage AI."
+- **WhoItsFor.tsx**: Update "for" items to include broader roles (e.g., "Business owners drowning in admin," "Entrepreneurs who want faster follow-up"). Keep realtor-specific items but add business-general ones.
+- **Header.tsx**: No text changes needed (nav is generic).
+- **SocialProof.tsx**: Adjust one testimonial placeholder to reference a non-realtor business owner.
 
 ---
 
-## 4. New Section: "AI Tools You'll Master" (new component)
+## 3. Fix Text Contrast Issues
 
-Create `src/components/landing/AIToolsSection.tsx` -- a visual grid section placed after "What You'll Learn" showing the specific AI tools and platforms covered:
+Several areas have white text on light/white backgrounds or low-opacity text that's hard to read:
 
-- ChatGPT / GPT-5
-- Google Gemini
-- Claude
-- Canva AI
-- AI CRM (the presenter's tool)
+- **HeroSection.tsx (line 49)**: Trust strip text uses `opacity-60` on white text over dark bg -- increase to `opacity-80` for readability.
+- **FinalCTA.tsx (line 22)**: Same issue with "Seats are limited..." text at `opacity-60` -- increase to `opacity-80`.
+- **CRMBridge.tsx (line 32)**: Feature card descriptions use `opacity-70` -- increase to `opacity-80`.
+- **HeroSection.tsx (line 27)**: Subheadline uses `opacity-85` -- this is fine but will verify visually.
 
-Each shown as a minimal card with a tool name, one-liner, and a simple icon. Header: "The AI Stack You'll Walk Away With."
-
----
-
-## 5. Workshop Details Updates (`WorkshopDetails.tsx`)
-
-Add new detail cards:
-- **AI Tools Provided**: "Access to prompt libraries + AI tool guides"
-- **Skill Level**: "Beginner to Intermediate -- no coding required"
-
-Update the "Includes" value to: "Prompt Pack, AI Tool Guide, Templates, Replay"
+No white-on-white issues exist currently since dark sections use `bg-primary` (dark navy) with `text-primary-foreground` (light). Light sections use `bg-background` with `text-foreground` (dark). The main fix is increasing low-opacity text to be more readable.
 
 ---
 
-## 6. CRM Bridge Section Updates (`CRMBridge.tsx`)
+## Files Modified
 
-Make the AI angle more prominent:
-- Add feature descriptions under each tile (not just titles)
-- Add a new tile: "AI Lead Scoring" with a BrainCircuit icon
-- Update headline to: "Let AI Run Your Business After the Workshop"
+| File | Changes |
+|------|---------|
+| `src/components/landing/HeroSection.tsx` | Add sponsor logo row with links, broaden messaging, fix trust strip opacity |
+| `src/components/landing/WhoItsFor.tsx` | Broaden audience items to include all businesses |
+| `src/components/landing/SocialProof.tsx` | Add one business-owner testimonial placeholder |
+| `src/components/landing/FinalCTA.tsx` | Fix opacity on subtitle text |
+| `src/components/landing/CRMBridge.tsx` | Fix opacity on feature descriptions |
 
----
-
-## 7. FAQ Updates (`FAQSection.tsx`)
-
-Add 2 more AI-specific questions:
-- "Which AI tools will we use?" -> "We'll work hands-on with ChatGPT, Claude, and Gemini. No paid subscriptions required for the workshop."
-- "Will AI replace me?" -> "No. AI handles repetitive tasks so you can focus on relationships and closing. Think of it as a tireless assistant, not a replacement."
-
----
-
-## 8. Instructor Section Updates (`InstructorSection.tsx`)
-
-Add more AI-specific credibility:
-- "Certified in AI prompt engineering and automation"
-- "Trained 200+ agents on AI-powered workflows"
-
----
-
-## 9. Social Proof Updates (`SocialProof.tsx`)
-
-Make testimonial quotes more AI-specific:
-- Reference specific AI tools and outcomes
-- E.g., "I used the ChatGPT prompts to write 30 days of content in one afternoon."
-
----
-
-## Technical Details
-
-**Files modified:**
-- `src/index.css` -- New color palette, glow/grid animations
-- `tailwind.config.ts` -- New keyframes (pulse-glow, float)
-- `src/components/landing/HeroSection.tsx` -- AI badge, expanded bullets, gradient bg
-- `src/components/landing/WhatYoullLearn.tsx` -- 6 blocks, more bullets, AI-specific titles
-- `src/components/landing/WorkshopDetails.tsx` -- 2 new detail cards
-- `src/components/landing/CRMBridge.tsx` -- 4 tiles with descriptions, updated headline
-- `src/components/landing/FAQSection.tsx` -- 2 new FAQs
-- `src/components/landing/InstructorSection.tsx` -- More AI credentials
-- `src/components/landing/SocialProof.tsx` -- AI-specific quotes
-- `src/pages/Index.tsx` -- Add new AIToolsSection
-
-**New file created:**
-- `src/components/landing/AIToolsSection.tsx` -- AI tools grid section
-
-**No new dependencies required.** All visual effects use CSS animations and Tailwind utilities.
+**No new dependencies required.** The three uploaded logo images will be referenced directly from the uploads.
 
