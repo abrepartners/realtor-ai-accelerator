@@ -110,13 +110,13 @@
 /* AI-themed backgrounds */
 .ai-grid-bg {
   background-image:
-    linear-gradient(hsl(210 100% 55% / 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, hsl(210 100% 55% / 0.03) 1px, transparent 1px);
+    linear-gradient(hsl(var(--accent) / 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, hsl(var(--accent) / 0.03) 1px, transparent 1px);
   background-size: 40px 40px;
 }
 
 .ai-glow-bg {
-  background: radial-gradient(ellipse 80% 50% at 50% 0%, hsl(210 100% 55% / 0.12) 0%, transparent 70%);
+  background: radial-gradient(ellipse 80% 50% at 50% 0%, hsl(var(--accent) / 0.12) 0%, transparent 70%);
 }
 
 /* Typing cursor */
@@ -128,15 +128,15 @@
   content: '|';
   display: inline-block;
   animation: blink-cursor 0.8s step-end infinite;
-  color: hsl(210 100% 55%);
+  color: hsl(var(--accent));
   font-weight: 300;
   margin-left: 2px;
 }
 
 /* Pulse glow */
 @keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 0 8px hsl(210 100% 55% / 0.2); }
-  50% { box-shadow: 0 0 20px hsl(210 100% 55% / 0.4); }
+  0%, 100% { box-shadow: 0 0 8px hsl(var(--accent) / 0.2); }
+  50% { box-shadow: 0 0 20px hsl(var(--accent) / 0.4); }
 }
 .pulse-glow {
   animation: pulse-glow 3s ease-in-out infinite;
