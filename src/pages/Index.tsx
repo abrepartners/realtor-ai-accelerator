@@ -1,12 +1,47 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useState } from "react";
+import Header from "@/components/landing/Header";
+import HeroSection from "@/components/landing/HeroSection";
+import SocialProof from "@/components/landing/SocialProof";
+import WhatYoullLearn from "@/components/landing/WhatYoullLearn";
+import WhoItsFor from "@/components/landing/WhoItsFor";
+import WorkshopDetails from "@/components/landing/WorkshopDetails";
+import InstructorSection from "@/components/landing/InstructorSection";
+import CRMBridge from "@/components/landing/CRMBridge";
+import FAQSection from "@/components/landing/FAQSection";
+import FinalCTA from "@/components/landing/FinalCTA";
+import MobileCTABar from "@/components/landing/MobileCTABar";
+import RegistrationForm from "@/components/landing/RegistrationForm";
+import LeadMagnetForm from "@/components/landing/LeadMagnetForm";
+import CRMDemoForm from "@/components/landing/CRMDemoForm";
 
 const Index = () => {
+  const [regOpen, setRegOpen] = useState(false);
+  const [leadOpen, setLeadOpen] = useState(false);
+  const [demoOpen, setDemoOpen] = useState(false);
+  const [demoVariant, setDemoVariant] = useState<"demo" | "waitlist">("demo");
+
+  const openDemo = () => { setDemoVariant("demo"); setDemoOpen(true); };
+  const openWaitlist = () => { setDemoVariant("waitlist"); setDemoOpen(true); };
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
+    <div className="min-h-screen pb-16 md:pb-0">
+      <Header onReserveSeat={() => setRegOpen(true)} />
+      <main>
+        <HeroSection onReserveSeat={() => setRegOpen(true)} onGetOutline={() => setLeadOpen(true)} />
+        <SocialProof />
+        <WhatYoullLearn />
+        <WhoItsFor />
+        <WorkshopDetails />
+        <InstructorSection />
+        <CRMBridge onBookDemo={openDemo} onJoinWaitlist={openWaitlist} />
+        <FAQSection />
+        <FinalCTA onReserveSeat={() => setRegOpen(true)} onGetOutline={() => setLeadOpen(true)} />
+      </main>
+      <MobileCTABar onReserveSeat={() => setRegOpen(true)} />
+
+      <RegistrationForm open={regOpen} onOpenChange={setRegOpen} />
+      <LeadMagnetForm open={leadOpen} onOpenChange={setLeadOpen} />
+      <CRMDemoForm open={demoOpen} onOpenChange={setDemoOpen} variant={demoVariant} />
     </div>
   );
 };
