@@ -1,4 +1,5 @@
 import { Award, Wrench, BrainCircuit, Users } from "lucide-react";
+import thomasBrown from "@/assets/instructor/thomas-brown.png";
 
 const InstructorSection = () => (
   <section className="section-padding bg-background">
@@ -7,11 +8,9 @@ const InstructorSection = () => (
         Your Instructor
       </h2>
       <div className="mt-10 flex flex-col items-center gap-8 md:flex-row md:items-start">
-        <div className="h-40 w-40 shrink-0 rounded-xl bg-muted flex items-center justify-center">
-          <span className="text-xs text-muted-foreground">[Photo]</span>
-        </div>
+        <img src={thomasBrown} alt="Thomas Brown" className="h-40 w-40 shrink-0 rounded-xl object-cover" />
         <div>
-          <h3 className="text-xl font-bold text-foreground">[Instructor Name]</h3>
+          <h3 className="text-xl font-bold text-foreground">Thomas Brown</h3>
           <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
             I run a media + marketing operation and I build AI systems that help businesses follow up faster, save time, and close more consistently.
           </p>

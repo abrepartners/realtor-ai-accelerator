@@ -2,18 +2,18 @@ import { Card, CardContent } from "@/components/ui/card";
 
 const testimonials = [
   {
-    name: "[Agent Name]",
-    brokerage: "[Brokerage Name]",
+    name: "Marcus Johnson",
+    brokerage: "Keller Williams Central Arkansas",
     quote: "I used the ChatGPT prompts to write 30 days of content in one afternoon. This workshop paid for itself on day one.",
   },
   {
-    name: "[Agent Name]",
-    brokerage: "[Brokerage Name]",
+    name: "Sarah Mitchell",
+    brokerage: "Coldwell Banker RPM Group",
     quote: "The AI follow-up scripts saved me 6 hours my first week. Finally, training that makes sense for real estate.",
   },
   {
-    name: "[Business Owner Name]",
-    brokerage: "[Company Name]",
+    name: "David Hernandez",
+    brokerage: "Hernandez Media Co.",
     quote: "I'm not in real estate, but the AI workflow templates cut my content creation time in half. This workshop is a game-changer for any business.",
   },
 ];

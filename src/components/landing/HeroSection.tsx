@@ -2,7 +2,7 @@ import { FileText, Zap, Video, BarChart3 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import pinnacleLogo from "@/assets/sponsors/pinnacle.png";
 import eaglebankLogo from "@/assets/sponsors/eaglebank.png";
-import averybryantLogo from "@/assets/sponsors/averybryant.png";
+import averybryantWhiteLogo from "@/assets/sponsors/averybryant-white.png";
 
 interface HeroProps {
   onReserveSeat: () => void;
@@ -17,9 +17,9 @@ const bullets = [
 ];
 
 const sponsors = [
-  { src: pinnacleLogo, alt: "Pinnacle", href: "https://map.realtyonegroup.com/real-estate-agent/41130/rj-hawk" },
-  { src: eaglebankLogo, alt: "Eagle Bank Mortgage", href: "https://www.eaglebank.com/lender/kim-leech/" },
-  { src: averybryantLogo, alt: "Avery and Bryant", href: "https://www.averyandbryant.com" },
+  { src: pinnacleLogo, alt: "Pinnacle", href: "https://map.realtyonegroup.com/real-estate-agent/41130/rj-hawk", invert: false },
+  { src: eaglebankLogo, alt: "Eagle Bank Mortgage", href: "https://www.eaglebank.com/lender/kim-leech/", invert: true },
+  { src: averybryantWhiteLogo, alt: "Avery and Bryant", href: "https://www.averyandbryant.com", invert: false },
 ];
 
 const HeroSection = ({ onReserveSeat, onGetOutline }: HeroProps) => (
@@ -64,7 +64,7 @@ const HeroSection = ({ onReserveSeat, onGetOutline }: HeroProps) => (
         <div className="flex items-center justify-center gap-10 flex-wrap">
           {sponsors.map((s) => (
             <a key={s.alt} href={s.href} target="_blank" rel="noopener noreferrer" className="transition-opacity hover:opacity-80">
-              <img src={s.src} alt={s.alt} className="h-16 w-auto object-contain" />
+              <img src={s.src} alt={s.alt} className={`h-16 w-auto object-contain ${s.invert ? 'brightness-0 invert' : ''}`} />
             </a>
           ))}
         </div>

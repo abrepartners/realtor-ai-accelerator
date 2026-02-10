@@ -1,12 +1,12 @@
 import { Clock, MonitorPlay, Calendar, Gift, DollarSign, Users, Cpu, GraduationCap } from "lucide-react";
 
 const details = [
-  { icon: Clock, label: "Duration", value: "2 Hours" },
-  { icon: MonitorPlay, label: "Format", value: "[Live In-Person / Virtual]" },
-  { icon: Calendar, label: "Date & Time", value: "[Month Day, Year] at [Time TZ]" },
-  { icon: Gift, label: "Includes", value: "Prompt Pack, AI Tool Guide, Templates, Replay" },
-  { icon: DollarSign, label: "Price", value: "[$XX]" },
-  { icon: Users, label: "Seats", value: "[XX] spots available" },
+  { icon: Clock, label: "Duration", value: "2 Hours (10:00 AM – 12:00 PM CST)" },
+  { icon: MonitorPlay, label: "Format", value: "Live Virtual (Google Meet)" },
+  { icon: Calendar, label: "Date & Time", value: "March 24, 2026 at 10:00 AM CST" },
+  { icon: Gift, label: "Includes", value: "Prompt Pack, AI Tool Guide, Templates, Replay (attendees only), Lunch Provided" },
+  { icon: DollarSign, label: "Price", value: "Free" },
+  { icon: Users, label: "Seats", value: "Limited spots available" },
   { icon: Cpu, label: "AI Tools Provided", value: "Access to prompt libraries + AI tool guides" },
   { icon: GraduationCap, label: "Skill Level", value: "Beginner to Intermediate -- no coding required" },
 ];
