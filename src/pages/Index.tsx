@@ -3,6 +3,7 @@ import Header from "@/components/landing/Header";
 import HeroSection from "@/components/landing/HeroSection";
 import SocialProof from "@/components/landing/SocialProof";
 import WhatYoullLearn from "@/components/landing/WhatYoullLearn";
+import AIToolsSection from "@/components/landing/AIToolsSection";
 import WhoItsFor from "@/components/landing/WhoItsFor";
 import WorkshopDetails from "@/components/landing/WorkshopDetails";
 import InstructorSection from "@/components/landing/InstructorSection";
@@ -30,6 +31,7 @@ const Index = () => {
         <HeroSection onReserveSeat={() => setRegOpen(true)} onGetOutline={() => setLeadOpen(true)} />
         <SocialProof />
         <WhatYoullLearn />
+        <AIToolsSection />
         <WhoItsFor />
         <WorkshopDetails />
         <InstructorSection />
