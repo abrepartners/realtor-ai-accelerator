@@ -20,7 +20,7 @@ const CRMBridge = ({ onBookDemo, onJoinWaitlist }: CRMBridgeProps) => (
       <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">
         Let AI Run Your Business After the Workshop
       </h2>
-      <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed opacity-85 sm:text-base">
+      <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed opacity-90 sm:text-base">
         The workshop teaches you the workflows. My AI CRM helps you run them automatically: lead capture, follow-up, reminders, pipeline organization, and smarter nurturing.
       </p>
 

@@ -55,16 +55,16 @@ const HeroSection = ({ onReserveSeat, onGetOutline }: HeroProps) => (
         </Button>
       </div>
 
-      <p className="mt-8 text-xs tracking-wide opacity-80 sm:text-sm">
+      <p className="mt-8 text-xs tracking-wide opacity-90 sm:text-sm">
         Uses ChatGPT, Claude, and Gemini workflows &middot; Workshop seats limited &middot; Hands-on templates included
       </p>
 
       <div className="mt-10">
-        <p className="text-xs font-semibold uppercase tracking-widest opacity-60 mb-4">Sponsored by</p>
-        <div className="flex items-center justify-center gap-8 flex-wrap">
+        <p className="text-xs font-semibold uppercase tracking-widest opacity-90 mb-4">Sponsored by</p>
+        <div className="flex items-center justify-center gap-10 flex-wrap">
           {sponsors.map((s) => (
             <a key={s.alt} href={s.href} target="_blank" rel="noopener noreferrer" className="transition-opacity hover:opacity-80">
-              <img src={s.src} alt={s.alt} className="h-10 w-auto object-contain" />
+              <img src={s.src} alt={s.alt} className="h-16 w-auto object-contain" />
             </a>
           ))}
         </div>
