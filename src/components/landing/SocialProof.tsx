@@ -4,17 +4,17 @@ const testimonials = [
   {
     name: "[Agent Name]",
     brokerage: "[Brokerage Name]",
-    quote: "I saved 6 hours my first week just by using the follow-up prompts. This workshop gave me a system I actually stick with.",
+    quote: "I used the ChatGPT prompts to write 30 days of content in one afternoon. This workshop paid for itself on day one.",
   },
   {
     name: "[Agent Name]",
     brokerage: "[Brokerage Name]",
-    quote: "Finally, AI training that makes sense for real estate. No fluff, just workflows I could use immediately after the session.",
+    quote: "The AI follow-up scripts saved me 6 hours my first week. Finally, training that makes sense for real estate.",
   },
   {
     name: "[Team Lead Name]",
     brokerage: "[Brokerage Name]",
-    quote: "We rolled out the templates across our team the next day. Consistent messaging, faster response times, happier clients.",
+    quote: "We rolled out the AI templates across our team the next day. Consistent messaging, faster response times, happier clients.",
   },
 ];
 

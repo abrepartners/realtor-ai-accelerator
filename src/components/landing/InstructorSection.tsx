@@ -1,4 +1,4 @@
-import { Award, Wrench } from "lucide-react";
+import { Award, Wrench, BrainCircuit, Users } from "lucide-react";
 
 const InstructorSection = () => (
   <section className="section-padding bg-background">
@@ -23,6 +23,14 @@ const InstructorSection = () => (
             <li className="flex items-center gap-2 text-sm text-foreground">
               <Wrench className="h-4 w-4 text-accent" />
               Hands-on systems, not theory
+            </li>
+            <li className="flex items-center gap-2 text-sm text-foreground">
+              <BrainCircuit className="h-4 w-4 text-accent" />
+              Certified in AI prompt engineering and automation
+            </li>
+            <li className="flex items-center gap-2 text-sm text-foreground">
+              <Users className="h-4 w-4 text-accent" />
+              Trained 200+ agents on AI-powered workflows
             </li>
           </ul>
         </div>

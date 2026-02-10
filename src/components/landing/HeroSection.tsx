@@ -1,4 +1,4 @@
-import { FileText, Zap, Video } from "lucide-react";
+import { FileText, Zap, Video, BarChart3 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 interface HeroProps {
@@ -10,13 +10,19 @@ const bullets = [
   { icon: FileText, text: "AI prompts for listing descriptions, emails, texts, and follow-ups" },
   { icon: Zap, text: "Simple automations that reduce admin and missed leads" },
   { icon: Video, text: "Content repurposing system for Instagram and short-form video" },
+  { icon: BarChart3, text: "AI-powered market analysis and CMA talking points" },
 ];
 
 const HeroSection = ({ onReserveSeat, onGetOutline }: HeroProps) => (
-  <section className="section-padding bg-primary text-primary-foreground">
-    <div className="mx-auto max-w-4xl text-center">
-      <h1 className="text-3xl font-bold leading-tight tracking-tight sm:text-4xl md:text-5xl lg:text-6xl">
-        Turn AI Into Your Realtor Assistant in 2 Hours
+  <section className="section-padding bg-primary text-primary-foreground relative overflow-hidden">
+    <div className="absolute inset-0 ai-glow-bg pointer-events-none" />
+    <div className="relative mx-auto max-w-4xl text-center">
+      <span className="inline-flex items-center gap-2 rounded-full border border-accent/30 bg-accent/10 px-4 py-1.5 text-xs font-semibold tracking-wider text-accent uppercase pulse-glow">
+        Powered by AI
+      </span>
+
+      <h1 className="mt-6 text-3xl font-bold leading-tight tracking-tight sm:text-4xl md:text-5xl lg:text-6xl">
+        <span className="typing-cursor">Turn AI Into Your Realtor Assistant in 2 Hours</span>
       </h1>
       <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed opacity-85 sm:text-lg">
         Walk away with real workflows you can use the same day: faster follow-up, smarter client messaging, content in minutes, and a cleaner pipeline.
@@ -41,7 +47,7 @@ const HeroSection = ({ onReserveSeat, onGetOutline }: HeroProps) => (
       </div>
 
       <p className="mt-8 text-xs tracking-wide opacity-60 sm:text-sm">
-        Trusted by agents and teams &middot; Workshop seats limited &middot; Hands-on templates included
+        Uses ChatGPT, Claude, and Gemini workflows &middot; Workshop seats limited &middot; Hands-on templates included
       </p>
     </div>
   </section>
