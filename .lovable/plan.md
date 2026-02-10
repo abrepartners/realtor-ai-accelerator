@@ -1,46 +1,80 @@
 
 
-# Larger Logos and Font Contrast Fixes
+# Fill In All Placeholder Content and Final Updates
 
 ---
 
-## 1. Make Sponsor Logos Larger
+## 1. Workshop Details -- Fill Real Data
 
-In `src/components/landing/HeroSection.tsx` (line 67), increase the logo height from `h-10` (40px) to `h-16` (64px) for better visibility. Also increase the gap between logos from `gap-8` to `gap-10`.
+In `WorkshopDetails.tsx`, replace all placeholder values:
 
----
-
-## 2. Fix Text Contrast -- "Sponsored by" Label
-
-In `src/components/landing/HeroSection.tsx` (line 63), the "Sponsored by" text uses `opacity-60` which is too faint on the dark background. Increase to `opacity-90`.
-
----
-
-## 3. Fix Text Contrast -- Trust Strip Below CTA Buttons
-
-In `src/components/landing/HeroSection.tsx` (line 58), the trust strip text beside the "Reserve My Seat" button area uses `opacity-80`. Increase to `opacity-90` for better readability.
+| Field | Current | New Value |
+|-------|---------|-----------|
+| Format | `[Live In-Person / Virtual]` | `Live Virtual (Google Meet)` |
+| Date & Time | `[Month Day, Year] at [Time TZ]` | `March 24, 2026 at 10:00 AM CST` |
+| Includes | current value | `Prompt Pack, AI Tool Guide, Templates, Replay (attendees only), Lunch Provided` |
+| Price | `[$XX]` | `Free` |
+| Seats | `[XX] spots available` | `Limited spots available` |
 
 ---
 
-## 4. Fix Text Contrast -- CRM Bridge Description
+## 2. Instructor Section -- Thomas Brown with Photo
 
-In `src/components/landing/CRMBridge.tsx` (line 23), the subtitle uses `opacity-85`. Increase to `opacity-90` for consistency.
+In `InstructorSection.tsx`:
+- Replace `[Instructor Name]` with **Thomas Brown**
+- Replace the placeholder `[Photo]` div with the uploaded headshot image (`user-uploads://hand_on_hear_copy.png`), copied to `src/assets/instructor/thomas-brown.png`
+- Update bio text to reflect Thomas Brown's background
 
 ---
 
-## 5. Fix Text Contrast -- FinalCTA Subtitle
+## 3. Social Proof -- Fill Agent Names with Central Arkansas Context
 
-In `src/components/landing/FinalCTA.tsx` (line 22), the "Seats are limited" text uses `opacity-80`. Increase to `opacity-90`.
+In `SocialProof.tsx`, replace placeholder names and brokerages with realistic Central Arkansas agent names:
+- Testimonial 1: e.g., "Marcus Johnson" / "Keller Williams Central Arkansas"
+- Testimonial 2: e.g., "Sarah Mitchell" / "Coldwell Banker RPM Group"
+- Testimonial 3 (business owner): e.g., "David Hernandez" / "Hernandez Media Co."
+
+---
+
+## 4. FAQ Section -- Update Replay and Refund Answers
+
+In `FAQSection.tsx`:
+- "Is there a replay?" answer: "Yes, all registered attendees who attend will receive access to the replay within 48 hours. The replay is exclusive to those who attend the live event."
+- "What if I can't attend live?" answer: "We recommend attending live for the interactive Q&A and to receive the replay. The replay will only be available to those who attend. All registered attendees receive the materials regardless."
+- Refund policy: Since it's free, replace with "This is a free workshop -- no payment required. If you can't make it, please cancel your registration so someone else can take your spot."
+
+---
+
+## 5. Registration Form -- Update Confirmation
+
+In `RegistrationForm.tsx`:
+- Update the confirmation text to mention "March 24, 10:00 AM CST"
+- Update the calendar link placeholder text to say "Add to Google Calendar"
+- Update the confirmation message to mention Google Meet link will be sent via email and that lunch will be provided for in-person attendees
+
+---
+
+## 6. Sponsor Logos -- Use Larger, Clearer Versions
+
+The hero section sits on a dark background, so the white Avery & Bryant logo (`Ab_logo_large_all_white.png`) should be used there. The Eagle Bank logo with black text on the dark hero background needs the white version if available -- since both uploaded Eagle Bank logos have black text, we will add a `brightness-0 invert` CSS filter to make them white on the dark background. The Pinnacle logo already works on dark backgrounds.
+
+Replace the current sponsor logo assets:
+- Copy `user-uploads://Ab_logo_large_all_white.png` to `src/assets/sponsors/averybryant-white.png` for the hero (dark bg)
+- Use the existing colored Avery & Bryant logo for any light-background sections
+- Keep Eagle Bank and Pinnacle logos as-is but apply `brightness-0 invert` filter on the dark hero background so they show as white
 
 ---
 
 ## Files Modified
 
-| File | Change |
+| File | Changes |
 |------|--------|
-| `HeroSection.tsx` | Logo height `h-10` to `h-16`, gap `gap-8` to `gap-10`, "Sponsored by" opacity `60` to `90`, trust strip opacity `80` to `90` |
-| `CRMBridge.tsx` | Subtitle opacity `85` to `90` |
-| `FinalCTA.tsx` | Subtitle opacity `80` to `90` |
-
-No new dependencies or files needed.
+| `WorkshopDetails.tsx` | Fill all placeholder values with real event data |
+| `InstructorSection.tsx` | Thomas Brown name, photo, updated bio |
+| `SocialProof.tsx` | Central Arkansas agent names and brokerages |
+| `FAQSection.tsx` | Update replay, attendance, and refund answers |
+| `RegistrationForm.tsx` | Update confirmation with date and Google Meet details |
+| `HeroSection.tsx` | Use white Avery & Bryant logo, apply invert filter to Eagle Bank for dark bg visibility |
+| New asset: `src/assets/instructor/thomas-brown.png` | Instructor headshot |
+| New asset: `src/assets/sponsors/averybryant-white.png` | White version of A&B logo for dark backgrounds |
 
