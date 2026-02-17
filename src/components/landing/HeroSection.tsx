@@ -1,8 +1,8 @@
 import { FileText, Zap, Video, BarChart3 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import pinnacleLogo from "@/assets/sponsors/pinnacle.png";
-import eaglebankLogo from "@/assets/sponsors/eaglebank.png";
-import averybryantWhiteLogo from "@/assets/sponsors/averybryant-white.png";
+import pinnacleLogo from "@/assets/sponsors/pinnacle-color-trim.png";
+import eaglebankLogo from "@/assets/sponsors/eaglebank-color-trim.png";
+import averybryantLogo from "@/assets/sponsors/averybryant-color-trim.png";
 
 interface HeroProps {
   onReserveSeat: () => void;
@@ -17,54 +17,98 @@ const bullets = [
 ];
 
 const sponsors = [
-  { src: pinnacleLogo, alt: "Pinnacle", href: "https://map.realtyonegroup.com/real-estate-agent/41130/rj-hawk", invert: false },
-  { src: eaglebankLogo, alt: "Eagle Bank Mortgage", href: "https://www.eaglebank.com/lender/kim-leech/", invert: true },
-  { src: averybryantWhiteLogo, alt: "Avery and Bryant", href: "https://www.averyandbryant.com", invert: false },
+  {
+    src: pinnacleLogo,
+    alt: "Realty ONE Group Pinnacle",
+    href: "https://map.realtyonegroup.com/real-estate-agent/41130/rj-hawk",
+    logoClass: "h-16 sm:h-[4.65rem]",
+  },
+  {
+    src: eaglebankLogo,
+    alt: "Eagle Bank Mortgage",
+    href: "https://www.eaglebank.com/lender/kim-leech/",
+    logoClass: "h-16 sm:h-[4.65rem]",
+  },
+  {
+    src: averybryantLogo,
+    alt: "Avery and Bryant",
+    href: "https://www.averyandbryant.com",
+    logoClass: "h-16 sm:h-[4.65rem]",
+  },
 ];
 
 const HeroSection = ({ onReserveSeat, onGetOutline }: HeroProps) => (
-  <section className="section-padding bg-primary text-primary-foreground relative overflow-hidden">
-    <div className="absolute inset-0 ai-glow-bg pointer-events-none" />
-    <div className="relative mx-auto max-w-4xl text-center">
-      <span className="inline-flex items-center gap-2 rounded-full border border-accent/30 bg-accent/10 px-4 py-1.5 text-xs font-semibold tracking-wider text-accent uppercase pulse-glow">
-        Powered by AI
-      </span>
+  <section className="section-padding relative border-b border-border/65">
+    <div className="mx-auto max-w-6xl">
+      <div className="grid gap-10 lg:grid-cols-[1.08fr_0.92fr]">
+        <div className="reveal-up">
+          <span className="section-kicker">Edition 01 · Live Virtual Workshop</span>
+          <div className="mt-6 flex flex-wrap gap-2.5">
+            <span className="data-strip">March 24, 2026</span>
+            <span className="data-strip">10:00 AM CST</span>
+            <span className="data-strip">2-Hour Intensive</span>
+          </div>
 
-      <h1 className="mt-6 text-3xl font-bold leading-tight tracking-tight sm:text-4xl md:text-5xl lg:text-6xl">
-        <span className="typing-cursor">Turn AI Into Your Business Assistant in 2 Hours</span>
-      </h1>
-      <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed opacity-90 sm:text-lg">
-        Walk away with real workflows you can use the same day: faster follow-up, smarter client messaging, content in minutes, and a cleaner pipeline. Open to realtors, entrepreneurs, and any business looking to leverage AI.
-      </p>
+          <h1 className="mt-7 max-w-2xl text-4xl font-bold leading-[1.04] text-foreground sm:text-[3.2rem]">
+            Turn AI Into Your Business Assistant in 2 Hours
+          </h1>
+          <p className="mt-6 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
+            Walk away with real workflows you can use the same day: faster follow-up, smarter client messaging, content
+            in minutes, and a cleaner pipeline. Open to realtors, entrepreneurs, and any business looking to leverage
+            AI.
+          </p>
 
-      <ul className="mx-auto mt-8 flex max-w-xl flex-col gap-4 text-left sm:mt-10">
-        {bullets.map(({ icon: Icon, text }) => (
-          <li key={text} className="flex items-start gap-3">
-            <Icon className="mt-0.5 h-5 w-5 shrink-0 text-accent" />
-            <span className="text-sm sm:text-base opacity-90">{text}</span>
-          </li>
-        ))}
-      </ul>
+          <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
+            <Button size="lg" onClick={onReserveSeat} className="soft-pulse w-full bg-accent text-accent-foreground sm:w-auto">
+              Reserve My Seat
+            </Button>
+            <Button size="lg" variant="outline" onClick={onGetOutline} className="w-full sm:w-auto">
+              Get the Workshop Outline
+            </Button>
+          </div>
 
-      <div className="mt-10 flex flex-col items-center gap-3 sm:flex-row sm:justify-center sm:gap-4">
-        <Button size="lg" onClick={onReserveSeat} className="w-full bg-accent text-accent-foreground hover:bg-accent/90 font-semibold text-base sm:w-auto px-8">
-          Reserve My Seat
-        </Button>
-        <Button size="lg" variant="outline" onClick={onGetOutline} className="w-full border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10 font-medium sm:w-auto px-8">
-          Get the Workshop Outline
-        </Button>
+          <p className="meta-copy mt-7 text-xs uppercase tracking-[0.08em] text-muted-foreground">
+            Uses ChatGPT, Claude, and Gemini workflows · workshop seats limited · templates included
+          </p>
+        </div>
+
+        <aside className="section-frame reveal-up relative p-6 sm:p-7">
+          <div className="absolute -left-3 top-8 hidden h-12 w-1 rounded-full bg-[hsl(var(--accent))] lg:block" />
+          <p className="section-kicker">Inside The Live Session</p>
+          <ul className="stagger-fade mt-5 space-y-3.5">
+            {bullets.map(({ icon: Icon, text }) => (
+              <li key={text} className="flex items-start gap-3 rounded-xl border border-border/70 bg-background/55 px-3.5 py-3">
+                <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-accent/15 text-accent">
+                  <Icon className="h-4.5 w-4.5" />
+                </span>
+                <span className="text-sm leading-relaxed text-foreground">{text}</span>
+              </li>
+            ))}
+          </ul>
+
+          <div className="mt-7 rounded-2xl border border-border/75 bg-primary px-4 py-4 text-primary-foreground">
+            <p className="meta-copy text-[0.68rem] uppercase tracking-[0.11em] text-primary-foreground/80">Hands-On Stack</p>
+            <p className="mt-1.5 text-sm leading-relaxed">
+              Prompt libraries, automation templates, and live walkthroughs you can deploy the same day.
+            </p>
+          </div>
+        </aside>
       </div>
 
-      <p className="mt-8 text-xs tracking-wide opacity-90 sm:text-sm">
-        Uses ChatGPT, Claude, and Gemini workflows &middot; Workshop seats limited &middot; Hands-on templates included
-      </p>
-
-      <div className="mt-10">
-        <p className="text-xs font-semibold uppercase tracking-widest opacity-90 mb-4">Sponsored by</p>
-        <div className="flex items-center justify-center gap-10 flex-wrap">
+      <div className="mt-11 rounded-[calc(var(--radius)+0.15rem)] border border-border/75 bg-card/95 px-5 py-6 sm:px-8">
+        <p className="meta-copy text-center text-[0.66rem] font-medium uppercase tracking-[0.14em] text-muted-foreground">
+          Sponsored by
+        </p>
+        <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {sponsors.map((s) => (
-            <a key={s.alt} href={s.href} target="_blank" rel="noopener noreferrer" className="transition-opacity hover:opacity-80">
-              <img src={s.src} alt={s.alt} className={`h-16 w-auto object-contain ${s.invert ? 'brightness-0 invert' : ''}`} />
+            <a
+              key={s.alt}
+              href={s.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex min-h-[7.5rem] items-center justify-center rounded-2xl border border-border/70 bg-background/75 px-6 py-4 transition-colors hover:border-accent/35 hover:bg-accent/5"
+            >
+              <img src={s.src} alt={s.alt} className={`${s.logoClass} w-auto object-contain`} />
             </a>
           ))}
         </div>

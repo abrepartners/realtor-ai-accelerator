@@ -34,24 +34,25 @@ const blocks = [
 ];
 
 const WhatYoullLearn = () => (
-  <section id="learn" className="section-padding bg-muted/50 ai-grid-bg">
-    <div className="mx-auto max-w-5xl">
-      <h2 className="text-center text-2xl font-bold tracking-tight sm:text-3xl text-foreground">
-        What You'll Learn
-      </h2>
-      <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+  <section id="learn" className="section-padding relative">
+    <div className="mx-auto max-w-6xl">
+      <div className="mx-auto max-w-3xl text-center">
+        <span className="section-kicker justify-center">Curriculum</span>
+        <h2 className="mt-4 text-3xl font-bold tracking-tight text-foreground sm:text-4xl">What You'll Learn</h2>
+      </div>
+      <div className="stagger-fade mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {blocks.map(({ icon: Icon, title, bullets }) => (
-          <div key={title} className="rounded-lg border border-border bg-card p-6">
+          <div key={title} className="section-frame p-6">
             <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-md bg-accent/10 float-icon">
+              <div className="drift-float flex h-11 w-11 items-center justify-center rounded-xl border border-accent/25 bg-accent/13">
                 <Icon className="h-5 w-5 text-accent" />
               </div>
-              <h3 className="text-base font-semibold text-foreground">{title}</h3>
+              <h3 className="text-base font-semibold leading-snug text-foreground">{title}</h3>
             </div>
             <ul className="mt-4 space-y-2">
               {bullets.map((b) => (
-                <li key={b} className="flex items-start gap-2 text-sm text-muted-foreground">
-                  <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
+                <li key={b} className="flex items-start gap-2 text-sm leading-relaxed text-muted-foreground">
+                  <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
                   {b}
                 </li>
               ))}
@@ -59,7 +60,7 @@ const WhatYoullLearn = () => (
           </div>
         ))}
       </div>
-      <p className="mt-8 text-center text-sm font-medium text-foreground">
+      <p className="meta-copy mt-8 text-center text-[0.68rem] font-medium uppercase tracking-[0.09em] text-muted-foreground">
         You'll also receive: Prompt Pack + AI Tool Guide + Templates + Checklist
       </p>
     </div>

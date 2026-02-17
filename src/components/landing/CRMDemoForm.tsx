@@ -7,6 +7,7 @@ import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { trackEvent } from "@/lib/tracking";
+import { submitLeadToGHL } from "@/lib/ghl";
 import { CheckCircle } from "lucide-react";
 
 const schema = z.object({
@@ -34,21 +35,33 @@ const CRMDemoForm = ({ open, onOpenChange, variant = "demo" }: Props) => {
     defaultValues: { name: "", email: "", phone: "", teamSize: "", currentCRM: "" },
   });
 
-  const onSubmit = (data: FormData) => {
+  const onSubmit = async (data: FormData) => {
+    await submitLeadToGHL(isDemo ? "crm_demo" : "crm_waitlist", {
+      name: data.name,
+      email: data.email,
+      phone: data.phone,
+      teamSize: isDemo ? (data.teamSize || null) : null,
+      currentCRM: isDemo ? (data.currentCRM || null) : null,
+      variant,
+    });
     trackEvent("CRMDemo_Submit", { variant, formData: { name: data.name, email: data.email } });
     setSubmitted(true);
   };
 
   const handleClose = (val: boolean) => {
-    if (!val) { setSubmitted(false); form.reset(); }
+    if (!val) {
+      setSubmitted(false);
+      form.reset();
+    }
     onOpenChange(val);
   };
 
   return (
     <Dialog open={open} onOpenChange={handleClose}>
-      <DialogContent className="max-h-[90vh] overflow-y-auto bg-background sm:max-w-md">
-        <DialogHeader>
-          <DialogTitle className="text-foreground">
+      <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-[30rem]">
+        <DialogHeader className="space-y-3">
+          <span className="section-kicker">CRM Interest</span>
+          <DialogTitle>
             {submitted ? (isDemo ? "Demo Requested" : "You're on the List") : (isDemo ? "Book a CRM Demo" : "Join the CRM Waitlist")}
           </DialogTitle>
           <DialogDescription>
@@ -57,36 +70,70 @@ const CRMDemoForm = ({ open, onOpenChange, variant = "demo" }: Props) => {
         </DialogHeader>
 
         {submitted ? (
-          <div className="flex flex-col items-center gap-4 py-6 text-center">
+          <div className="section-frame flex flex-col items-center gap-4 px-5 py-8 text-center">
             <CheckCircle className="h-12 w-12 text-accent" />
             <p className="text-sm text-muted-foreground">
               {isDemo ? "Expect an email with calendar booking options shortly." : "We'll notify you as soon as early access opens."}
             </p>
-            {isDemo && <a href="#" className="text-sm font-medium text-accent underline">[Schedule on Calendar]</a>}
+            {isDemo && (
+              <a href="#" className="text-sm font-medium text-accent underline decoration-accent/50 underline-offset-4">
+                [Schedule on Calendar]
+              </a>
+            )}
           </div>
         ) : (
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
               <FormField control={form.control} name="name" render={({ field }) => (
-                <FormItem><FormLabel>Name</FormLabel><FormControl><Input placeholder="Full name" {...field} /></FormControl><FormMessage /></FormItem>
+                <FormItem>
+                  <FormLabel>Name</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Full name" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
               )} />
               <FormField control={form.control} name="email" render={({ field }) => (
-                <FormItem><FormLabel>Email</FormLabel><FormControl><Input type="email" placeholder="you@email.com" {...field} /></FormControl><FormMessage /></FormItem>
+                <FormItem>
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <Input type="email" placeholder="you@email.com" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
               )} />
               <FormField control={form.control} name="phone" render={({ field }) => (
-                <FormItem><FormLabel>Phone</FormLabel><FormControl><Input type="tel" placeholder="(555) 555-5555" {...field} /></FormControl><FormMessage /></FormItem>
+                <FormItem>
+                  <FormLabel>Phone</FormLabel>
+                  <FormControl>
+                    <Input type="tel" placeholder="(555) 555-5555" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
               )} />
               {isDemo && (
                 <>
                   <FormField control={form.control} name="teamSize" render={({ field }) => (
-                    <FormItem><FormLabel>Team Size (optional)</FormLabel><FormControl><Input placeholder="e.g. 5 agents" {...field} /></FormControl><FormMessage /></FormItem>
+                    <FormItem>
+                      <FormLabel>Team Size (optional)</FormLabel>
+                      <FormControl>
+                        <Input placeholder="e.g. 5 agents" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
                   )} />
                   <FormField control={form.control} name="currentCRM" render={({ field }) => (
-                    <FormItem><FormLabel>Current CRM (optional)</FormLabel><FormControl><Input placeholder="e.g. Follow Up Boss" {...field} /></FormControl><FormMessage /></FormItem>
+                    <FormItem>
+                      <FormLabel>Current CRM (optional)</FormLabel>
+                      <FormControl>
+                        <Input placeholder="e.g. Follow Up Boss" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
                   )} />
                 </>
               )}
-              <Button type="submit" className="w-full bg-accent text-accent-foreground hover:bg-accent/90 font-semibold">
+              <Button type="submit" className="w-full bg-accent text-accent-foreground hover:bg-accent/90">
                 {isDemo ? "Request a Demo" : "Join the Waitlist"}
               </Button>
             </form>

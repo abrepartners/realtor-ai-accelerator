@@ -9,22 +9,25 @@ const tools = [
 ];
 
 const AIToolsSection = () => (
-  <section className="section-padding bg-background">
-    <div className="mx-auto max-w-5xl">
-      <h2 className="text-center text-2xl font-bold tracking-tight sm:text-3xl text-foreground">
-        The AI Stack You'll Walk Away With
-      </h2>
-      <p className="mx-auto mt-4 max-w-2xl text-center text-sm text-muted-foreground sm:text-base">
+  <section className="section-padding">
+    <div className="mx-auto max-w-6xl">
+      <div className="mx-auto max-w-3xl text-center">
+        <span className="section-kicker justify-center">Tooling</span>
+        <h2 className="mt-4 text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+          The AI Stack You'll Walk Away With
+        </h2>
+      </div>
+      <p className="mx-auto mt-4 max-w-2xl text-center text-sm leading-relaxed text-muted-foreground sm:text-base">
         No theory. You'll get hands-on time with each tool and leave with workflows you can run immediately.
       </p>
-      <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+      <div className="stagger-fade mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
         {tools.map(({ icon: Icon, name, desc }) => (
-          <div key={name} className="flex flex-col items-center rounded-lg border border-border bg-card p-6 text-center">
-            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-accent/10 float-icon">
+          <div key={name} className="section-frame flex flex-col items-center p-5 text-center">
+            <div className="drift-float flex h-12 w-12 items-center justify-center rounded-2xl border border-accent/30 bg-accent/13">
               <Icon className="h-6 w-6 text-accent" />
             </div>
             <h3 className="mt-4 text-sm font-bold text-foreground">{name}</h3>
-            <p className="mt-1 text-xs text-muted-foreground">{desc}</p>
+            <p className="mt-1 text-xs leading-relaxed text-muted-foreground">{desc}</p>
           </div>
         ))}
       </div>

@@ -2,16 +2,21 @@ import { Award, Wrench, BrainCircuit, Users } from "lucide-react";
 import thomasBrown from "@/assets/instructor/thomas-brown.png";
 
 const InstructorSection = () => (
-  <section className="section-padding bg-background">
-    <div className="mx-auto max-w-3xl">
-      <h2 className="text-center text-2xl font-bold tracking-tight sm:text-3xl text-foreground">
-        Your Instructor
-      </h2>
-      <div className="mt-10 flex flex-col items-center gap-8 md:flex-row md:items-start">
-        <img src={thomasBrown} alt="Thomas Brown" className="h-40 w-40 shrink-0 rounded-xl object-cover" />
+  <section className="section-padding">
+    <div className="mx-auto max-w-6xl">
+      <div className="mx-auto max-w-3xl text-center">
+        <span className="section-kicker justify-center">Leadership</span>
+        <h2 className="mt-4 text-3xl font-bold tracking-tight text-foreground sm:text-4xl">Your Instructor</h2>
+      </div>
+      <div className="section-frame mt-10 flex flex-col items-center gap-8 p-6 md:flex-row md:items-start md:p-8">
+        <img
+          src={thomasBrown}
+          alt="Thomas Brown"
+          className="h-40 w-40 shrink-0 rounded-2xl border border-border/70 object-cover shadow-[0_16px_30px_-18px_hsl(var(--foreground)/0.75)]"
+        />
         <div>
-          <h3 className="text-xl font-bold text-foreground">Thomas Brown</h3>
-          <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+          <h3 className="text-2xl font-bold text-foreground">Thomas Brown</h3>
+          <p className="mt-2 text-sm leading-relaxed text-muted-foreground sm:text-base">
             I run a media + marketing operation and I build AI systems that help businesses follow up faster, save time, and close more consistently.
           </p>
           <ul className="mt-4 space-y-2">

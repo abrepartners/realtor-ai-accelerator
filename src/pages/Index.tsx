@@ -21,25 +21,36 @@ const Index = () => {
   const [demoOpen, setDemoOpen] = useState(false);
   const [demoVariant, setDemoVariant] = useState<"demo" | "waitlist">("demo");
 
-  const openDemo = () => { setDemoVariant("demo"); setDemoOpen(true); };
-  const openWaitlist = () => { setDemoVariant("waitlist"); setDemoOpen(true); };
+  const openDemo = () => {
+    setDemoVariant("demo");
+    setDemoOpen(true);
+  };
+  const openWaitlist = () => {
+    setDemoVariant("waitlist");
+    setDemoOpen(true);
+  };
 
   return (
-    <div className="min-h-screen pb-16 md:pb-0">
-      <Header onReserveSeat={() => setRegOpen(true)} />
-      <main>
-        <HeroSection onReserveSeat={() => setRegOpen(true)} onGetOutline={() => setLeadOpen(true)} />
-        <SocialProof />
-        <WhatYoullLearn />
-        <AIToolsSection />
-        <WhoItsFor />
-        <WorkshopDetails />
-        <InstructorSection />
-        <CRMBridge onBookDemo={openDemo} onJoinWaitlist={openWaitlist} />
-        <FAQSection />
-        <FinalCTA onReserveSeat={() => setRegOpen(true)} onGetOutline={() => setLeadOpen(true)} />
-      </main>
-      <MobileCTABar onReserveSeat={() => setRegOpen(true)} />
+    <div className="site-shell min-h-screen pb-24 md:pb-0">
+      <div aria-hidden className="mesh-bg" />
+      <div aria-hidden className="grain-overlay" />
+      <div aria-hidden className="editorial-grid" />
+      <div className="relative z-10">
+        <Header onReserveSeat={() => setRegOpen(true)} />
+        <main>
+          <HeroSection onReserveSeat={() => setRegOpen(true)} onGetOutline={() => setLeadOpen(true)} />
+          <SocialProof />
+          <WhatYoullLearn />
+          <AIToolsSection />
+          <WhoItsFor />
+          <WorkshopDetails />
+          <InstructorSection />
+          <CRMBridge onBookDemo={openDemo} onJoinWaitlist={openWaitlist} />
+          <FAQSection />
+          <FinalCTA onReserveSeat={() => setRegOpen(true)} onGetOutline={() => setLeadOpen(true)} />
+        </main>
+        <MobileCTABar onReserveSeat={() => setRegOpen(true)} />
+      </div>
 
       <RegistrationForm open={regOpen} onOpenChange={setRegOpen} />
       <LeadMagnetForm open={leadOpen} onOpenChange={setLeadOpen} />

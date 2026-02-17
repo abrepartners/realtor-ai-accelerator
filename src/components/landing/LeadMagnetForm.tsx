@@ -7,6 +7,7 @@ import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { trackEvent } from "@/lib/tracking";
+import { submitLeadToGHL } from "@/lib/ghl";
 import { CheckCircle } from "lucide-react";
 
 const schema = z.object({
@@ -29,42 +30,73 @@ const LeadMagnetForm = ({ open, onOpenChange }: Props) => {
     defaultValues: { name: "", email: "", phone: "" },
   });
 
-  const onSubmit = (data: FormData) => {
+  const onSubmit = async (data: FormData) => {
+    await submitLeadToGHL("workshop_outline", {
+      name: data.name,
+      email: data.email,
+      phone: data.phone || null,
+    });
     trackEvent("OutlineLead_Submit", { formData: { name: data.name, email: data.email } });
     setSubmitted(true);
   };
 
   const handleClose = (val: boolean) => {
-    if (!val) { setSubmitted(false); form.reset(); }
+    if (!val) {
+      setSubmitted(false);
+      form.reset();
+    }
     onOpenChange(val);
   };
 
   return (
     <Dialog open={open} onOpenChange={handleClose}>
-      <DialogContent className="bg-background sm:max-w-md">
-        <DialogHeader>
-          <DialogTitle className="text-foreground">{submitted ? "Check Your Inbox" : "Get the Workshop Outline"}</DialogTitle>
-          <DialogDescription>{submitted ? "We've sent the outline to your email." : "Enter your info and we'll send you the full workshop breakdown."}</DialogDescription>
+      <DialogContent className="sm:max-w-[28rem]">
+        <DialogHeader className="space-y-3">
+          <span className="section-kicker">Resource Download</span>
+          <DialogTitle>{submitted ? "Check Your Inbox" : "Get the Workshop Outline"}</DialogTitle>
+          <DialogDescription>
+            {submitted ? "We've sent the outline to your email." : "Enter your info and we'll send you the full workshop breakdown."}
+          </DialogDescription>
         </DialogHeader>
 
         {submitted ? (
-          <div className="flex flex-col items-center gap-4 py-6 text-center">
+          <div className="section-frame flex flex-col items-center gap-4 px-5 py-8 text-center">
             <CheckCircle className="h-12 w-12 text-accent" />
-            <p className="text-sm text-muted-foreground">The workshop outline is on its way. Keep an eye out for it.</p>
+            <p className="text-sm leading-relaxed text-muted-foreground">
+              The workshop outline is on its way. Keep an eye out for it.
+            </p>
           </div>
         ) : (
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
               <FormField control={form.control} name="name" render={({ field }) => (
-                <FormItem><FormLabel>Name</FormLabel><FormControl><Input placeholder="Full name" {...field} /></FormControl><FormMessage /></FormItem>
+                <FormItem>
+                  <FormLabel>Name</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Full name" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
               )} />
               <FormField control={form.control} name="email" render={({ field }) => (
-                <FormItem><FormLabel>Email</FormLabel><FormControl><Input type="email" placeholder="you@email.com" {...field} /></FormControl><FormMessage /></FormItem>
+                <FormItem>
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <Input type="email" placeholder="you@email.com" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
               )} />
               <FormField control={form.control} name="phone" render={({ field }) => (
-                <FormItem><FormLabel>Phone (optional)</FormLabel><FormControl><Input type="tel" placeholder="(555) 555-5555" {...field} /></FormControl><FormMessage /></FormItem>
+                <FormItem>
+                  <FormLabel>Phone (optional)</FormLabel>
+                  <FormControl>
+                    <Input type="tel" placeholder="(555) 555-5555" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
               )} />
-              <Button type="submit" className="w-full bg-accent text-accent-foreground hover:bg-accent/90 font-semibold">
+              <Button type="submit" className="w-full bg-accent text-accent-foreground hover:bg-accent/90">
                 Send Me the Outline
               </Button>
             </form>

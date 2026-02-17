@@ -14,28 +14,29 @@ const notForItems = [
 ];
 
 const WhoItsFor = () => (
-  <section id="who" className="section-padding bg-background">
-    <div className="mx-auto max-w-4xl">
-      <h2 className="text-center text-2xl font-bold tracking-tight sm:text-3xl text-foreground">
-        Who It's For
-      </h2>
-      <div className="mt-10 grid gap-8 md:grid-cols-2">
-        <div className="rounded-lg border border-border bg-card p-6">
-          <h3 className="text-lg font-semibold text-foreground">This Is For You If...</h3>
+  <section id="who" className="section-padding">
+    <div className="mx-auto max-w-6xl">
+      <div className="mx-auto max-w-3xl text-center">
+        <span className="section-kicker justify-center">Fit Check</span>
+        <h2 className="mt-4 text-3xl font-bold tracking-tight text-foreground sm:text-4xl">Who It's For</h2>
+      </div>
+      <div className="stagger-fade mt-10 grid gap-6 md:grid-cols-2">
+        <div className="section-frame p-6">
+          <h3 className="text-xl font-semibold text-foreground">This Is For You If...</h3>
           <ul className="mt-4 space-y-3">
             {forItems.map((item) => (
-              <li key={item} className="flex items-start gap-3 text-sm text-card-foreground">
+              <li key={item} className="flex items-start gap-3 text-sm leading-relaxed text-card-foreground">
                 <Check className="mt-0.5 h-4 w-4 shrink-0 text-accent" />
                 {item}
               </li>
             ))}
           </ul>
         </div>
-        <div className="rounded-lg border border-border bg-card p-6">
-          <h3 className="text-lg font-semibold text-foreground">This Is Not For You If...</h3>
+        <div className="section-frame p-6">
+          <h3 className="text-xl font-semibold text-foreground">This Is Not For You If...</h3>
           <ul className="mt-4 space-y-3">
             {notForItems.map((item) => (
-              <li key={item} className="flex items-start gap-3 text-sm text-muted-foreground">
+              <li key={item} className="flex items-start gap-3 text-sm leading-relaxed text-muted-foreground">
                 <X className="mt-0.5 h-4 w-4 shrink-0 text-destructive" />
                 {item}
               </li>

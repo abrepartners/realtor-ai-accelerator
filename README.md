@@ -71,3 +71,21 @@ Yes, you can!
 To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
 
 Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+
+## GoHighLevel (GHL) form wiring
+
+The landing forms can POST leads directly into GHL workflows using webhook URLs.
+
+1. Copy `.env.example` to `.env.local`.
+2. Add either one shared webhook URL (`VITE_GHL_WEBHOOK_URL`) or form-specific webhook URLs:
+   - `VITE_GHL_RESERVE_WEBHOOK_URL`
+   - `VITE_GHL_OUTLINE_WEBHOOK_URL`
+   - `VITE_GHL_CRM_DEMO_WEBHOOK_URL`
+   - `VITE_GHL_CRM_WAITLIST_WEBHOOK_URL`
+3. Restart `npm run dev`.
+
+Payload includes:
+- `formType`
+- `submittedAt`
+- `pageUrl`
+- Form field values
