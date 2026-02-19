@@ -23,6 +23,14 @@ interface Props {
   onOpenChange: (open: boolean) => void;
 }
 
+const getWorkshopOutlineUrl = () => {
+  const envUrl = import.meta.env.VITE_WORKSHOP_OUTLINE_URL;
+  if (typeof envUrl === "string" && envUrl.trim().length > 0) {
+    return envUrl.trim();
+  }
+  return `${window.location.origin}/docs/workshop_syllabus.docx`;
+};
+
 const LeadMagnetForm = ({ open, onOpenChange }: Props) => {
   const [submitted, setSubmitted] = useState(false);
   const form = useForm<FormData>({
@@ -31,10 +39,13 @@ const LeadMagnetForm = ({ open, onOpenChange }: Props) => {
   });
 
   const onSubmit = async (data: FormData) => {
+    const outlineDocumentUrl = getWorkshopOutlineUrl();
     await submitLeadToGHL("workshop_outline", {
       name: data.name,
       email: data.email,
       phone: data.phone || null,
+      outlineDocumentUrl,
+      requestedDelivery: "email",
     });
     trackEvent("OutlineLead_Submit", { formData: { name: data.name, email: data.email } });
     setSubmitted(true);
@@ -63,8 +74,16 @@ const LeadMagnetForm = ({ open, onOpenChange }: Props) => {
           <div className="section-frame flex flex-col items-center gap-4 px-5 py-8 text-center">
             <CheckCircle className="h-12 w-12 text-accent" />
             <p className="text-sm leading-relaxed text-muted-foreground">
-              The workshop outline is on its way. Keep an eye out for it.
+              The workshop outline is on its way. Check your inbox for the syllabus download link.
             </p>
+            <a
+              href={getWorkshopOutlineUrl()}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm font-medium text-accent underline decoration-accent/50 underline-offset-4"
+            >
+              Preview workshop syllabus
+            </a>
           </div>
         ) : (
           <Form {...form}>

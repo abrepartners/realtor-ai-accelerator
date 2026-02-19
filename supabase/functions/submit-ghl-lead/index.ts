@@ -18,9 +18,11 @@ const FORM_SCHEMAS: Record<string, Record<string, { type: string; maxLength: num
     attendancePreference: { type: "string", required: false, maxLength: 30  },
   },
   workshop_outline: {
-    name:  { type: "string", required: true,  maxLength: 100 },
-    email: { type: "string", required: true,  maxLength: 255 },
-    phone: { type: "string", required: false, maxLength: 20  },
+    name:             { type: "string", required: true,  maxLength: 100 },
+    email:            { type: "string", required: true,  maxLength: 255 },
+    phone:            { type: "string", required: false, maxLength: 20  },
+    outlineDocumentUrl:{ type: "string", required: false, maxLength: 500 },
+    requestedDelivery:{ type: "string", required: false, maxLength: 30  },
   },
   crm_demo: {
     name:       { type: "string", required: true,  maxLength: 100 },

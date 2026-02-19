@@ -83,9 +83,9 @@ The landing forms can POST leads directly into GHL workflows using webhook URLs.
      - `VITE_SUPABASE_PUBLISHABLE_KEY`
    - Direct webhook fallback (client-side):
      - `VITE_GHL_WEBHOOK_URL` or form-specific webhook URLs:
-   - `VITE_GHL_RESERVE_WEBHOOK_URL`
-   - `VITE_GHL_OUTLINE_WEBHOOK_URL`
-   - `VITE_GHL_CRM_WAITLIST_WEBHOOK_URL`
+       - `VITE_GHL_RESERVE_WEBHOOK_URL`
+       - `VITE_GHL_OUTLINE_WEBHOOK_URL`
+       - `VITE_GHL_CRM_WAITLIST_WEBHOOK_URL`
 3. Restart `npm run dev`.
 
 Payload includes:
@@ -93,6 +93,16 @@ Payload includes:
 - `submittedAt`
 - `pageUrl`
 - Form field values
+
+For the workshop outline flow, payload also includes:
+- `outlineDocumentUrl`
+- `requestedDelivery` (set to `"email"`)
+
+The default outline URL is hosted at:
+- `/docs/workshop_syllabus.docx`
+
+You can override it with:
+- `VITE_WORKSHOP_OUTLINE_URL`
 
 ## Workshop location config
 
