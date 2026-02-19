@@ -8,7 +8,7 @@ const address = readEnv("VITE_WORKSHOP_ADDRESS") || "Address shared in registrat
 const city = readEnv("VITE_WORKSHOP_CITY") || "Little Rock, AR";
 
 export const workshopConfig = {
-  dateLabel: "March 24, 2026",
+  dateLabel: "March 25, 2026",
   timeLabel: "10:00 AM - 12:00 PM",
   timeZone: "CST",
   formatLabel: "In-Person Workshop",
@@ -16,4 +16,3 @@ export const workshopConfig = {
   address,
   city,
 };
-
