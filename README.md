@@ -77,10 +77,14 @@ Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/c
 The landing forms can POST leads directly into GHL workflows using webhook URLs.
 
 1. Copy `.env.example` to `.env.local`.
-2. Add either one shared webhook URL (`VITE_GHL_WEBHOOK_URL`) or form-specific webhook URLs:
+2. Configure one of these delivery paths:
+   - Supabase Edge Function (recommended):
+     - `VITE_SUPABASE_URL`
+     - `VITE_SUPABASE_PUBLISHABLE_KEY`
+   - Direct webhook fallback (client-side):
+     - `VITE_GHL_WEBHOOK_URL` or form-specific webhook URLs:
    - `VITE_GHL_RESERVE_WEBHOOK_URL`
    - `VITE_GHL_OUTLINE_WEBHOOK_URL`
-   - `VITE_GHL_CRM_DEMO_WEBHOOK_URL`
    - `VITE_GHL_CRM_WAITLIST_WEBHOOK_URL`
 3. Restart `npm run dev`.
 
@@ -89,3 +93,9 @@ Payload includes:
 - `submittedAt`
 - `pageUrl`
 - Form field values
+
+## Workshop location config
+
+Set these in `.env.local` to show your real in-person address across the site:
+- `VITE_WORKSHOP_ADDRESS`
+- `VITE_WORKSHOP_CITY`

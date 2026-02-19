@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { workshopConfig } from "@/lib/workshopConfig";
 
 interface FinalCTAProps {
   onReserveSeat: () => void;
@@ -28,7 +29,7 @@ const FinalCTA = ({ onReserveSeat, onGetOutline }: FinalCTAProps) => (
             </Button>
           </div>
           <p className="meta-copy mt-6 text-[0.7rem] uppercase tracking-[0.09em] text-primary-foreground/78">
-            Seats are limited to keep it interactive.
+            {workshopConfig.seatCap} in-person seats only.
           </p>
         </div>
       </div>

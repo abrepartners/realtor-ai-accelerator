@@ -13,9 +13,7 @@ import { CheckCircle } from "lucide-react";
 const schema = z.object({
   name: z.string().trim().min(1, "Name is required").max(100),
   email: z.string().trim().email("Invalid email").max(255),
-  phone: z.string().trim().min(7, "Valid phone required").max(20),
-  teamSize: z.string().trim().max(50).optional(),
-  currentCRM: z.string().trim().max(100).optional(),
+  phone: z.string().trim().max(20).optional(),
 });
 
 type FormData = z.infer<typeof schema>;
@@ -23,28 +21,23 @@ type FormData = z.infer<typeof schema>;
 interface Props {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  variant?: "demo" | "waitlist";
 }
 
-const CRMDemoForm = ({ open, onOpenChange, variant = "demo" }: Props) => {
+const CRMDemoForm = ({ open, onOpenChange }: Props) => {
   const [submitted, setSubmitted] = useState(false);
-  const isDemo = variant === "demo";
 
   const form = useForm<FormData>({
     resolver: zodResolver(schema),
-    defaultValues: { name: "", email: "", phone: "", teamSize: "", currentCRM: "" },
+    defaultValues: { name: "", email: "", phone: "" },
   });
 
   const onSubmit = async (data: FormData) => {
-    await submitLeadToGHL(isDemo ? "crm_demo" : "crm_waitlist", {
+    await submitLeadToGHL("crm_waitlist", {
       name: data.name,
       email: data.email,
-      phone: data.phone,
-      teamSize: isDemo ? (data.teamSize || null) : null,
-      currentCRM: isDemo ? (data.currentCRM || null) : null,
-      variant,
+      phone: data.phone || null,
     });
-    trackEvent("CRMDemo_Submit", { variant, formData: { name: data.name, email: data.email } });
+    trackEvent("CRMWaitlist_Submit", { formData: { name: data.name, email: data.email } });
     setSubmitted(true);
   };
 
@@ -61,25 +54,18 @@ const CRMDemoForm = ({ open, onOpenChange, variant = "demo" }: Props) => {
       <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-[30rem]">
         <DialogHeader className="space-y-3">
           <span className="section-kicker">CRM Interest</span>
-          <DialogTitle>
-            {submitted ? (isDemo ? "Demo Requested" : "You're on the List") : (isDemo ? "Book a CRM Demo" : "Join the CRM Waitlist")}
-          </DialogTitle>
+          <DialogTitle>{submitted ? "You're on the List" : "Join the CRM Waitlist"}</DialogTitle>
           <DialogDescription>
-            {submitted ? "We'll reach out soon with next steps." : (isDemo ? "Tell us a bit about your setup and we'll schedule a walkthrough." : "Get early access and updates on the AI CRM.")}
+            {submitted ? "We'll notify you as soon as early access opens." : "Get early access and updates on the AI CRM."}
           </DialogDescription>
         </DialogHeader>
 
         {submitted ? (
           <div className="section-frame flex flex-col items-center gap-4 px-5 py-8 text-center">
             <CheckCircle className="h-12 w-12 text-accent" />
-            <p className="text-sm text-muted-foreground">
-              {isDemo ? "Expect an email with calendar booking options shortly." : "We'll notify you as soon as early access opens."}
+            <p className="text-sm leading-relaxed text-muted-foreground">
+              Thanks for joining. We'll reach out with waitlist updates and early access details.
             </p>
-            {isDemo && (
-              <a href="#" className="text-sm font-medium text-accent underline decoration-accent/50 underline-offset-4">
-                [Schedule on Calendar]
-              </a>
-            )}
           </div>
         ) : (
           <Form {...form}>
@@ -104,37 +90,15 @@ const CRMDemoForm = ({ open, onOpenChange, variant = "demo" }: Props) => {
               )} />
               <FormField control={form.control} name="phone" render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Phone</FormLabel>
+                  <FormLabel>Phone (optional)</FormLabel>
                   <FormControl>
                     <Input type="tel" placeholder="(555) 555-5555" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )} />
-              {isDemo && (
-                <>
-                  <FormField control={form.control} name="teamSize" render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Team Size (optional)</FormLabel>
-                      <FormControl>
-                        <Input placeholder="e.g. 5 agents" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )} />
-                  <FormField control={form.control} name="currentCRM" render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Current CRM (optional)</FormLabel>
-                      <FormControl>
-                        <Input placeholder="e.g. Follow Up Boss" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )} />
-                </>
-              )}
               <Button type="submit" className="w-full bg-accent text-accent-foreground hover:bg-accent/90">
-                {isDemo ? "Request a Demo" : "Join the Waitlist"}
+                Join the Waitlist
               </Button>
             </form>
           </Form>
@@ -145,3 +109,4 @@ const CRMDemoForm = ({ open, onOpenChange, variant = "demo" }: Props) => {
 };
 
 export default CRMDemoForm;
+

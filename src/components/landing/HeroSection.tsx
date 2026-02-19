@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import pinnacleLogo from "@/assets/sponsors/pinnacle-color-trim.png";
 import eaglebankLogo from "@/assets/sponsors/eaglebank-color-trim.png";
 import averybryantLogo from "@/assets/sponsors/averybryant-color-trim.png";
+import { workshopConfig } from "@/lib/workshopConfig";
 
 interface HeroProps {
   onReserveSeat: () => void;
@@ -42,11 +43,11 @@ const HeroSection = ({ onReserveSeat, onGetOutline }: HeroProps) => (
     <div className="mx-auto max-w-6xl">
       <div className="grid gap-10 lg:grid-cols-[1.08fr_0.92fr]">
         <div className="reveal-up">
-          <span className="section-kicker">Edition 01 · Live Virtual Workshop</span>
+          <span className="section-kicker">Edition 01 · In-Person Workshop</span>
           <div className="mt-6 flex flex-wrap gap-2.5">
-            <span className="data-strip">March 24, 2026</span>
-            <span className="data-strip">10:00 AM CST</span>
-            <span className="data-strip">2-Hour Intensive</span>
+            <span className="data-strip">{workshopConfig.dateLabel}</span>
+            <span className="data-strip">{workshopConfig.timeLabel} {workshopConfig.timeZone}</span>
+            <span className="data-strip">{workshopConfig.seatCap} Seats Max</span>
           </div>
 
           <h1 className="mt-7 max-w-2xl text-4xl font-bold leading-[1.04] text-foreground sm:text-[3.2rem]">
@@ -56,6 +57,9 @@ const HeroSection = ({ onReserveSeat, onGetOutline }: HeroProps) => (
             Walk away with real workflows you can use the same day: faster follow-up, smarter client messaging, content
             in minutes, and a cleaner pipeline. Open to realtors, entrepreneurs, and any business looking to leverage
             AI.
+          </p>
+          <p className="meta-copy mt-4 text-xs uppercase tracking-[0.07em] text-muted-foreground">
+            In person · {workshopConfig.city} · {workshopConfig.address}
           </p>
 
           <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
@@ -68,13 +72,13 @@ const HeroSection = ({ onReserveSeat, onGetOutline }: HeroProps) => (
           </div>
 
           <p className="meta-copy mt-7 text-xs uppercase tracking-[0.08em] text-muted-foreground">
-            Uses ChatGPT, Claude, and Gemini workflows · workshop seats limited · templates included
+            Uses ChatGPT, Claude, and Gemini workflows · {workshopConfig.seatCap}-seat in-person cap · templates included
           </p>
         </div>
 
         <aside className="section-frame reveal-up relative p-6 sm:p-7">
           <div className="absolute -left-3 top-8 hidden h-12 w-1 rounded-full bg-[hsl(var(--accent))] lg:block" />
-          <p className="section-kicker">Inside The Live Session</p>
+          <p className="section-kicker">Inside The In-Person Session</p>
           <ul className="stagger-fade mt-5 space-y-3.5">
             {bullets.map(({ icon: Icon, text }) => (
               <li key={text} className="flex items-start gap-3 rounded-xl border border-border/70 bg-background/55 px-3.5 py-3">

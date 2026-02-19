@@ -1,12 +1,14 @@
-import { Clock, MonitorPlay, Calendar, Gift, DollarSign, Users, Cpu, GraduationCap } from "lucide-react";
+import { Clock, MonitorPlay, Calendar, Gift, DollarSign, Users, Cpu, GraduationCap, MapPin } from "lucide-react";
+import { workshopConfig } from "@/lib/workshopConfig";
 
 const details = [
-  { icon: Clock, label: "Duration", value: "2 Hours (10:00 AM – 12:00 PM CST)" },
-  { icon: MonitorPlay, label: "Format", value: "Live Virtual (Google Meet)" },
-  { icon: Calendar, label: "Date & Time", value: "March 24, 2026 at 10:00 AM CST" },
-  { icon: Gift, label: "Includes", value: "Prompt Pack, AI Tool Guide, Templates, Replay (attendees only), Lunch Provided" },
+  { icon: Clock, label: "Duration", value: `2 Hours (${workshopConfig.timeLabel} ${workshopConfig.timeZone})` },
+  { icon: MonitorPlay, label: "Format", value: workshopConfig.formatLabel },
+  { icon: Calendar, label: "Date & Time", value: `${workshopConfig.dateLabel} at 10:00 AM ${workshopConfig.timeZone}` },
+  { icon: MapPin, label: "Address", value: `${workshopConfig.address} · ${workshopConfig.city}` },
+  { icon: Gift, label: "Includes", value: "Prompt Pack, AI Tool Guide, Templates, In-person Q&A, Lunch Provided" },
   { icon: DollarSign, label: "Price", value: "Free" },
-  { icon: Users, label: "Seats", value: "Limited spots available" },
+  { icon: Users, label: "Seats", value: `${workshopConfig.seatCap} in-person seats (hard cap)` },
   { icon: Cpu, label: "AI Tools Provided", value: "Access to prompt libraries + AI tool guides" },
   { icon: GraduationCap, label: "Skill Level", value: "Beginner to Intermediate -- no coding required" },
 ];
@@ -32,7 +34,7 @@ const WorkshopDetails = () => (
         ))}
       </div>
       <p className="meta-copy mt-7 text-center text-[0.68rem] font-medium uppercase tracking-[0.08em] text-[hsl(var(--signal))]">
-        Seats are limited to keep it hands-on and interactive.
+        Only {workshopConfig.seatCap} in-person seats are available.
       </p>
     </div>
   </section>

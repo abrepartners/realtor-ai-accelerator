@@ -18,17 +18,7 @@ import CRMDemoForm from "@/components/landing/CRMDemoForm";
 const Index = () => {
   const [regOpen, setRegOpen] = useState(false);
   const [leadOpen, setLeadOpen] = useState(false);
-  const [demoOpen, setDemoOpen] = useState(false);
-  const [demoVariant, setDemoVariant] = useState<"demo" | "waitlist">("demo");
-
-  const openDemo = () => {
-    setDemoVariant("demo");
-    setDemoOpen(true);
-  };
-  const openWaitlist = () => {
-    setDemoVariant("waitlist");
-    setDemoOpen(true);
-  };
+  const [waitlistOpen, setWaitlistOpen] = useState(false);
 
   return (
     <div className="site-shell min-h-screen pb-24 md:pb-0">
@@ -45,7 +35,7 @@ const Index = () => {
           <WhoItsFor />
           <WorkshopDetails />
           <InstructorSection />
-          <CRMBridge onBookDemo={openDemo} onJoinWaitlist={openWaitlist} />
+          <CRMBridge onJoinWaitlist={() => setWaitlistOpen(true)} />
           <FAQSection />
           <FinalCTA onReserveSeat={() => setRegOpen(true)} onGetOutline={() => setLeadOpen(true)} />
         </main>
@@ -54,7 +44,7 @@ const Index = () => {
 
       <RegistrationForm open={regOpen} onOpenChange={setRegOpen} />
       <LeadMagnetForm open={leadOpen} onOpenChange={setLeadOpen} />
-      <CRMDemoForm open={demoOpen} onOpenChange={setDemoOpen} variant={demoVariant} />
+      <CRMDemoForm open={waitlistOpen} onOpenChange={setWaitlistOpen} />
     </div>
   );
 };

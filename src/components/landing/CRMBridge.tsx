@@ -2,7 +2,6 @@ import { Repeat, ListChecks, Megaphone, BrainCircuit } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 interface CRMBridgeProps {
-  onBookDemo: () => void;
   onJoinWaitlist: () => void;
 }
 
@@ -13,7 +12,7 @@ const features = [
   { icon: BrainCircuit, title: "AI Lead Scoring", desc: "Prioritize your hottest leads automatically so you never miss a close." },
 ];
 
-const CRMBridge = ({ onBookDemo, onJoinWaitlist }: CRMBridgeProps) => (
+const CRMBridge = ({ onJoinWaitlist }: CRMBridgeProps) => (
   <section className="section-padding relative overflow-hidden bg-primary text-primary-foreground">
     <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_0%,hsl(var(--accent)/0.28),transparent_34%),radial-gradient(circle_at_86%_10%,hsl(var(--signal)/0.26),transparent_32%)]" />
     <div className="relative mx-auto max-w-6xl">
@@ -37,15 +36,11 @@ const CRMBridge = ({ onBookDemo, onJoinWaitlist }: CRMBridgeProps) => (
         ))}
       </div>
 
-      <div className="mt-10 flex flex-col items-center gap-3 sm:flex-row sm:justify-center sm:gap-4">
-        <Button size="lg" onClick={onBookDemo} className="w-full bg-accent text-accent-foreground hover:bg-accent/90 sm:w-auto">
-          Book a CRM Demo
-        </Button>
+      <div className="mt-10 flex justify-center">
         <Button
           size="lg"
-          variant="outline"
           onClick={onJoinWaitlist}
-          className="w-full border-primary-foreground/30 bg-primary-foreground/5 text-primary-foreground hover:bg-primary-foreground/12 sm:w-auto"
+          className="w-full bg-accent text-accent-foreground hover:bg-accent/90 sm:w-auto"
         >
           Join the CRM Waitlist
         </Button>

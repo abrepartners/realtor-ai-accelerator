@@ -9,12 +9,13 @@ const corsHeaders = {
 // Strict server-side validation rules mirroring client-side zod schemas
 const FORM_SCHEMAS: Record<string, Record<string, { type: string; maxLength: number; required?: boolean; minLength?: number }>> = {
   reserve_seat: {
-    name:      { type: "string", required: true,  maxLength: 100 },
-    email:     { type: "string", required: true,  maxLength: 255 },
-    phone:     { type: "string", required: true,  maxLength: 20,  minLength: 7 },
-    brokerage: { type: "string", required: false, maxLength: 100 },
-    city:      { type: "string", required: false, maxLength: 100 },
-    role:      { type: "string", required: true,  maxLength: 50  },
+    name:                 { type: "string", required: true,  maxLength: 100 },
+    email:                { type: "string", required: true,  maxLength: 255 },
+    phone:                { type: "string", required: true,  maxLength: 20,  minLength: 7 },
+    brokerage:            { type: "string", required: false, maxLength: 100 },
+    city:                 { type: "string", required: false, maxLength: 100 },
+    role:                 { type: "string", required: true,  maxLength: 50  },
+    attendancePreference: { type: "string", required: false, maxLength: 30  },
   },
   workshop_outline: {
     name:  { type: "string", required: true,  maxLength: 100 },
@@ -32,7 +33,7 @@ const FORM_SCHEMAS: Record<string, Record<string, { type: string; maxLength: num
   crm_waitlist: {
     name:    { type: "string", required: true,  maxLength: 100 },
     email:   { type: "string", required: true,  maxLength: 255 },
-    phone:   { type: "string", required: true,  maxLength: 20, minLength: 7 },
+    phone:   { type: "string", required: false, maxLength: 20 },
     variant: { type: "string", required: false, maxLength: 20 },
   },
 };

@@ -9,7 +9,11 @@ import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { trackEvent } from "@/lib/tracking";
 import { submitLeadToGHL } from "@/lib/ghl";
+import { workshopConfig } from "@/lib/workshopConfig";
 import { CheckCircle } from "lucide-react";
+
+const attendanceOptions = ["in_person", "cant_attend"] as const;
+type AttendancePreference = (typeof attendanceOptions)[number];
 
 const schema = z.object({
   name: z.string().trim().min(1, "Name is required").max(100),
@@ -18,6 +22,7 @@ const schema = z.object({
   brokerage: z.string().trim().max(100).optional(),
   city: z.string().trim().max(100).optional(),
   role: z.string().min(1, "Select a role"),
+  attendancePreference: z.enum(attendanceOptions),
 });
 
 type FormData = z.infer<typeof schema>;
@@ -29,9 +34,10 @@ interface Props {
 
 const RegistrationForm = ({ open, onOpenChange }: Props) => {
   const [submitted, setSubmitted] = useState(false);
+  const [submittedAttendance, setSubmittedAttendance] = useState<AttendancePreference>("in_person");
   const form = useForm<FormData>({
     resolver: zodResolver(schema),
-    defaultValues: { name: "", email: "", phone: "", brokerage: "", city: "", role: "" },
+    defaultValues: { name: "", email: "", phone: "", brokerage: "", city: "", role: "", attendancePreference: "in_person" },
   });
 
   const onSubmit = async (data: FormData) => {
@@ -42,14 +48,19 @@ const RegistrationForm = ({ open, onOpenChange }: Props) => {
       brokerage: data.brokerage || null,
       city: data.city || null,
       role: data.role,
+      attendancePreference: data.attendancePreference,
     });
-    trackEvent("ReserveSeat_Click", { formData: { name: data.name, email: data.email } });
+    trackEvent("ReserveSeat_Click", {
+      formData: { name: data.name, email: data.email, attendancePreference: data.attendancePreference },
+    });
+    setSubmittedAttendance(data.attendancePreference);
     setSubmitted(true);
   };
 
   const handleClose = (val: boolean) => {
     if (!val) {
       setSubmitted(false);
+      setSubmittedAttendance("in_person");
       form.reset();
     }
     onOpenChange(val);
@@ -62,7 +73,9 @@ const RegistrationForm = ({ open, onOpenChange }: Props) => {
           <span className="section-kicker">Enrollment</span>
           <DialogTitle>{submitted ? "You're In!" : "Reserve My Seat"}</DialogTitle>
           <DialogDescription>
-            {submitted ? "Check your email for confirmation details." : "Secure your spot in the AI Workshop for Realtors."}
+            {submitted
+              ? "Check your email for confirmation details."
+              : `Secure your spot in our in-person workshop (${workshopConfig.seatCap} seats max).`}
           </DialogDescription>
         </DialogHeader>
 
@@ -70,15 +83,26 @@ const RegistrationForm = ({ open, onOpenChange }: Props) => {
           <div className="section-frame flex flex-col items-center gap-4 px-5 py-8 text-center">
             <CheckCircle className="h-12 w-12 text-accent" />
             <p className="meta-copy text-[0.7rem] font-semibold uppercase tracking-[0.1em] text-foreground">
-              March 24, 2026 · 10:00 AM - 12:00 PM CST
+              {workshopConfig.dateLabel} · {workshopConfig.timeLabel} {workshopConfig.timeZone}
             </p>
-            <p className="text-sm leading-relaxed text-muted-foreground">
-              Your Google Meet link will be sent to your email. We'll also send prep materials and your prompt pack before
-              the workshop.
-            </p>
-            <a href="#" className="text-sm font-medium text-accent underline decoration-accent/50 underline-offset-4">
-              Add to Google Calendar
-            </a>
+            {submittedAttendance === "in_person" ? (
+              <>
+                <p className="text-sm leading-relaxed text-muted-foreground">
+                  Your in-person workshop confirmation is on the way, including venue address and arrival details.
+                </p>
+                <p className="text-sm font-medium text-foreground">
+                  Address: {workshopConfig.address} · {workshopConfig.city}
+                </p>
+                <a href="#" className="text-sm font-medium text-accent underline decoration-accent/50 underline-offset-4">
+                  Add to Google Calendar
+                </a>
+              </>
+            ) : (
+              <p className="text-sm leading-relaxed text-muted-foreground">
+                You are on the remote updates list. We will email the calendar invite, workshop materials, and post-event
+                resources so you can still follow along.
+              </p>
+            )}
           </div>
         ) : (
           <Form {...form}>
@@ -125,6 +149,23 @@ const RegistrationForm = ({ open, onOpenChange }: Props) => {
                   <FormControl>
                     <Input placeholder="Your city" {...field} />
                   </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )} />
+              <FormField control={form.control} name="attendancePreference" render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Attendance Preference</FormLabel>
+                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Choose one" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value="in_person">I am attending in person</SelectItem>
+                      <SelectItem value="cant_attend">I cannot attend in person, send me resources</SelectItem>
+                    </SelectContent>
+                  </Select>
                   <FormMessage />
                 </FormItem>
               )} />
