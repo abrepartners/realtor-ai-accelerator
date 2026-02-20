@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Header from "@/components/landing/Header";
 import HeroSection from "@/components/landing/HeroSection";
+import VideoHighlights from "@/components/landing/VideoHighlights";
 import SocialProof from "@/components/landing/SocialProof";
 import WhatYoullLearn from "@/components/landing/WhatYoullLearn";
 import AIToolsSection from "@/components/landing/AIToolsSection";
@@ -29,6 +30,7 @@ const Index = () => {
         <Header onReserveSeat={() => setRegOpen(true)} />
         <main>
           <HeroSection onReserveSeat={() => setRegOpen(true)} onGetOutline={() => setLeadOpen(true)} />
+          <VideoHighlights />
           <SocialProof />
           <WhatYoullLearn />
           <AIToolsSection />
