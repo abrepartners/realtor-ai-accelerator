@@ -5,18 +5,18 @@ import caydenPoster from "@/assets/videos/cayden-poster.jpg";
 
 const clips = [
   {
-    label: "Live Workshop Footage",
-    title: "What The Room Feels Like",
+    label: "Sponsor Spotlight",
+    title: "RJ Hawk, Event Sponsor",
     description:
-      "A quick look at the in-person training format so attendees know what to expect before reserving one of the limited seats.",
+      "RJ is a featured sponsor of this event and a key local real estate partner helping support this in-person workshop experience.",
     src: workshopClip,
     poster: workshopPoster,
   },
   {
-    label: "Attendee Perspective",
-    title: "Real Feedback In Action",
+    label: "Creative Specialist",
+    title: "Cayden at Avery & Bryant",
     description:
-      "A short attendee highlight that reinforces the practical, immediately usable systems covered during the session.",
+      "Cayden works with Thomas as a creative specialist, and Avery & Bryant uses AI in its day-to-day process for content and marketing execution.",
     src: caydenClip,
     poster: caydenPoster,
   },
@@ -26,12 +26,12 @@ const VideoHighlights = () => (
   <section className="section-padding relative border-b border-border/60">
     <div className="mx-auto max-w-6xl">
       <div className="mx-auto max-w-3xl text-center reveal-up">
-        <span className="section-kicker justify-center">Workshop Preview</span>
+        <span className="section-kicker justify-center">Partner + Team Highlights</span>
         <h2 className="mt-4 text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-          See The Training Style Before You Register
+          Meet The People Behind This Workshop
         </h2>
         <p className="mt-4 text-sm leading-relaxed text-muted-foreground sm:text-base">
-          These short clips show the in-person energy and practical format. Tap either video to play with sound.
+          Quick introductions from a sponsor and a core creative team member. Tap either video to play with sound.
         </p>
       </div>
 
