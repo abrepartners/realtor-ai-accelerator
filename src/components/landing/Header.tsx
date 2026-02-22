@@ -2,6 +2,8 @@ import { useState } from "react";
 import { Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
+import { workshopConfig } from "@/lib/workshopConfig";
+import { useCountdown } from "@/hooks/useCountdown";
 
 interface HeaderProps {
   onReserveSeat: () => void;
@@ -19,8 +21,11 @@ const scrollTo = (href: string) => {
   el?.scrollIntoView({ behavior: "smooth" });
 };
 
+const pad = (value: number) => String(value).padStart(2, "0");
+
 const Header = ({ onReserveSeat }: HeaderProps) => {
   const [open, setOpen] = useState(false);
+  const countdown = useCountdown(workshopConfig.eventStartIso);
 
   return (
     <header className="sticky top-0 z-50 border-b border-border/80 bg-background/90 backdrop-blur-xl supports-[backdrop-filter]:bg-background/72">
@@ -42,6 +47,17 @@ const Header = ({ onReserveSeat }: HeaderProps) => {
               {link.label}
             </button>
           ))}
+          <div className="hidden lg:flex">
+            {countdown.expired ? (
+              <span className="rounded-lg border border-border/75 bg-card/80 px-3 py-1.5 text-center text-[0.62rem] font-medium leading-tight text-[hsl(var(--signal))]">
+                Enrollment remains first-come until all 40 seats are filled.
+              </span>
+            ) : (
+              <span className="meta-copy rounded-full border border-border/75 bg-card/80 px-3 py-1 text-[0.62rem] uppercase tracking-[0.08em] text-muted-foreground">
+                Starts in {pad(countdown.days)}d {pad(countdown.hours)}h {pad(countdown.minutes)}m
+              </span>
+            )}
+          </div>
           <Button onClick={onReserveSeat} className="bg-accent text-accent-foreground hover:bg-accent/90">
             Reserve My Seat
           </Button>
@@ -63,6 +79,13 @@ const Header = ({ onReserveSeat }: HeaderProps) => {
           >
             <SheetTitle className="sr-only">Navigation</SheetTitle>
             <p className="meta-copy text-[0.62rem] uppercase tracking-[0.12em] text-muted-foreground">Navigation</p>
+            <div className="mt-3 rounded-xl border border-border/75 bg-card/70 px-3 py-2.5">
+              <p className="meta-copy text-[0.62rem] uppercase tracking-[0.08em] text-muted-foreground">
+                {countdown.expired
+                  ? "Enrollment remains first-come until all 40 seats are filled."
+                  : `Starts in ${pad(countdown.days)}d ${pad(countdown.hours)}h ${pad(countdown.minutes)}m ${pad(countdown.seconds)}s`}
+              </p>
+            </div>
             <nav className="mt-6 flex flex-col gap-3">
               {navLinks.map((link) => (
                 <button

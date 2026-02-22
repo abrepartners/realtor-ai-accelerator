@@ -83,7 +83,7 @@ const RegistrationForm = ({ open, onOpenChange }: Props) => {
           <div className="section-frame flex flex-col items-center gap-4 px-5 py-8 text-center">
             <CheckCircle className="h-12 w-12 text-accent" />
             <p className="meta-copy text-[0.7rem] font-semibold uppercase tracking-[0.1em] text-foreground">
-              {workshopConfig.dateLabel} · {workshopConfig.timeLabel} {workshopConfig.timeZone}
+              {workshopConfig.dateLabel} · {workshopConfig.timeLabel} {workshopConfig.timeZoneLabel}
             </p>
             {submittedAttendance === "in_person" ? (
               <>
@@ -91,7 +91,7 @@ const RegistrationForm = ({ open, onOpenChange }: Props) => {
                   Your in-person workshop confirmation is on the way, including venue address and arrival details.
                 </p>
                 <p className="text-sm font-medium text-foreground">
-                  Address: {workshopConfig.address} · {workshopConfig.city}
+                  Address: {workshopConfig.locationLabel}
                 </p>
                 <a href="#" className="text-sm font-medium text-accent underline decoration-accent/50 underline-offset-4">
                   Add to Google Calendar

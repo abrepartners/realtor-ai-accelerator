@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { trackEvent } from "@/lib/tracking";
 import { submitLeadToGHL } from "@/lib/ghl";
-import { CheckCircle } from "lucide-react";
+import { AlertCircle, CheckCircle } from "lucide-react";
 
 const schema = z.object({
   name: z.string().trim().min(1, "Name is required").max(100),
@@ -28,19 +28,23 @@ const getWorkshopOutlineUrl = () => {
   if (typeof envUrl === "string" && envUrl.trim().length > 0) {
     return envUrl.trim();
   }
-  return `${window.location.origin}/docs/workshop_syllabus.docx`;
+  return `${window.location.origin}/docs/workshop_syllabus.pdf`;
 };
 
 const LeadMagnetForm = ({ open, onOpenChange }: Props) => {
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [deliveryError, setDeliveryError] = useState<string | null>(null);
   const form = useForm<FormData>({
     resolver: zodResolver(schema),
     defaultValues: { name: "", email: "", phone: "" },
   });
 
   const onSubmit = async (data: FormData) => {
+    setIsSubmitting(true);
+    setDeliveryError(null);
     const outlineDocumentUrl = getWorkshopOutlineUrl();
-    await submitLeadToGHL("workshop_outline", {
+    const result = await submitLeadToGHL("workshop_outline", {
       name: data.name,
       email: data.email,
       phone: data.phone || null,
@@ -48,12 +52,19 @@ const LeadMagnetForm = ({ open, onOpenChange }: Props) => {
       requestedDelivery: "email",
     });
     trackEvent("OutlineLead_Submit", { formData: { name: data.name, email: data.email } });
-    setSubmitted(true);
+    if (result.delivered) {
+      setSubmitted(true);
+    } else {
+      setDeliveryError("We couldn't send email yet. Please retry below or download the PDF directly.");
+    }
+    setIsSubmitting(false);
   };
 
   const handleClose = (val: boolean) => {
     if (!val) {
       setSubmitted(false);
+      setIsSubmitting(false);
+      setDeliveryError(null);
       form.reset();
     }
     onOpenChange(val);
@@ -64,9 +75,15 @@ const LeadMagnetForm = ({ open, onOpenChange }: Props) => {
       <DialogContent className="sm:max-w-[28rem]">
         <DialogHeader className="space-y-3">
           <span className="section-kicker">Resource Download</span>
-          <DialogTitle>{submitted ? "Check Your Inbox" : "Get the Workshop Outline"}</DialogTitle>
+          <DialogTitle>
+            {submitted ? "Check Your Inbox" : deliveryError ? "Email Delivery Delayed" : "Get the Workshop Outline"}
+          </DialogTitle>
           <DialogDescription>
-            {submitted ? "We've sent the outline to your email." : "Enter your info and we'll send you the full workshop breakdown."}
+            {submitted
+              ? "We've sent the outline to your email."
+              : deliveryError
+                ? "Use the direct download link now, then retry your email delivery."
+                : "Enter your info and we'll send you the full workshop breakdown."}
           </DialogDescription>
         </DialogHeader>
 
@@ -82,8 +99,26 @@ const LeadMagnetForm = ({ open, onOpenChange }: Props) => {
               rel="noopener noreferrer"
               className="text-sm font-medium text-accent underline decoration-accent/50 underline-offset-4"
             >
-              Preview workshop syllabus
+              Preview workshop syllabus PDF
             </a>
+          </div>
+        ) : deliveryError ? (
+          <div className="section-frame flex flex-col items-center gap-4 px-5 py-8 text-center">
+            <AlertCircle className="h-12 w-12 text-[hsl(var(--signal))]" />
+            <p className="text-sm leading-relaxed text-muted-foreground">
+              {deliveryError}
+            </p>
+            <a
+              href={getWorkshopOutlineUrl()}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm font-medium text-accent underline decoration-accent/50 underline-offset-4"
+            >
+              Download workshop syllabus PDF
+            </a>
+            <Button type="button" variant="outline" onClick={() => setDeliveryError(null)} className="w-full">
+              Retry Sending
+            </Button>
           </div>
         ) : (
           <Form {...form}>
@@ -115,8 +150,8 @@ const LeadMagnetForm = ({ open, onOpenChange }: Props) => {
                   <FormMessage />
                 </FormItem>
               )} />
-              <Button type="submit" className="w-full bg-accent text-accent-foreground hover:bg-accent/90">
-                Send Me the Outline
+              <Button type="submit" disabled={isSubmitting} className="w-full bg-accent text-accent-foreground hover:bg-accent/90">
+                {isSubmitting ? "Sending..." : "Send Me the Outline"}
               </Button>
             </form>
           </Form>

@@ -99,13 +99,20 @@ For the workshop outline flow, payload also includes:
 - `requestedDelivery` (set to `"email"`)
 
 The default outline URL is hosted at:
-- `/docs/workshop_syllabus.docx`
+- `/docs/workshop_syllabus.pdf`
 
 You can override it with:
 - `VITE_WORKSHOP_OUTLINE_URL`
+
+GHL setup playbook for the outline workflow:
+- `/docs/ghl-outline-workflow.md`
 
 ## Workshop location config
 
 Set these in `.env.local` to show your real in-person address across the site:
 - `VITE_WORKSHOP_ADDRESS`
 - `VITE_WORKSHOP_CITY`
+
+Optional countdown config:
+- `VITE_WORKSHOP_EVENT_START_ISO` (example: `2026-03-25T10:00:00-05:00`)
+- `VITE_WORKSHOP_TIME_ZONE_LABEL` (example: `CT`)

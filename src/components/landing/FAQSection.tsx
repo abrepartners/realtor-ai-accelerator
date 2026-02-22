@@ -6,7 +6,7 @@ const faqs = [
   { q: "Will I get the prompts and templates?", a: "Yes. Every attendee receives the full Prompt Pack, AI Tool Guide, templates, and a checklist you can start using the same day." },
   { q: "Which AI tools will we use?", a: "We'll work hands-on with ChatGPT, Claude, and Gemini. No paid subscriptions required for the workshop -- free tiers are all you need." },
   { q: "Will AI replace me?", a: "No. AI handles repetitive tasks so you can focus on relationships and closing. Think of it as a tireless assistant, not a replacement." },
-  { q: "Where is the workshop?", a: `This is an in-person workshop in ${workshopConfig.city}. Address: ${workshopConfig.address}. Exact arrival details are included in your confirmation email.` },
+  { q: "Where is the workshop?", a: `This is an in-person workshop in ${workshopConfig.city}. Address: ${workshopConfig.locationLabel}. Exact arrival details are included in your confirmation email.` },
   { q: "What if I can't attend in person?", a: "Select the non-attendee option in registration and we will email your calendar hold, workshop outline, and post-event resources so you can still benefit from the training." },
   { q: "Do I need special tools?", a: "No paid tools required. We'll use free AI tools during the workshop. You just need a laptop or tablet and internet access." },
   { q: "Is this specific to my market?", a: "The workflows are designed for any residential real estate market. The AI strategies are adaptable regardless of your location or niche." },
