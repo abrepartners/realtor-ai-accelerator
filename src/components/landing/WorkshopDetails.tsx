@@ -1,11 +1,13 @@
 import { Clock, MonitorPlay, Calendar, Gift, DollarSign, Users, Cpu, GraduationCap, MapPin } from "lucide-react";
 import { workshopConfig } from "@/lib/workshopConfig";
 
+const venueAddress = "107 Progress Drive, Suite 200, Bryant, Arkansas, 72022";
+
 const details = [
   { icon: Clock, label: "Duration", value: `2 Hours (${workshopConfig.timeLabel} ${workshopConfig.timeZoneLabel})` },
   { icon: MonitorPlay, label: "Format", value: workshopConfig.formatLabel },
   { icon: Calendar, label: "Date & Time", value: `${workshopConfig.dateLabel} at 10:00 AM ${workshopConfig.timeZoneLabel}` },
-  { icon: MapPin, label: "Address", value: workshopConfig.locationLabel },
+  { icon: MapPin, label: "Address", value: venueAddress },
   { icon: Gift, label: "Includes", value: "Prompt Pack, AI Tool Guide, Templates, In-person Q&A, Lunch Provided" },
   { icon: DollarSign, label: "Price", value: "Free" },
   { icon: Users, label: "Seats", value: `${workshopConfig.seatCap} in-person seats (hard cap)` },
