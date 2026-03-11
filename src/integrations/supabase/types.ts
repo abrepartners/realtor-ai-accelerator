@@ -14,7 +14,63 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      leads: {
+        Row: {
+          attendance_preference: string | null
+          brokerage: string | null
+          city: string | null
+          created_at: string | null
+          current_crm: string | null
+          email: string
+          form_type: string
+          ghl_delivered: boolean | null
+          id: string
+          name: string
+          outline_document_url: string | null
+          phone: string | null
+          requested_delivery: string | null
+          role: string | null
+          team_size: string | null
+          variant: string | null
+        }
+        Insert: {
+          attendance_preference?: string | null
+          brokerage?: string | null
+          city?: string | null
+          created_at?: string | null
+          current_crm?: string | null
+          email: string
+          form_type: string
+          ghl_delivered?: boolean | null
+          id?: string
+          name: string
+          outline_document_url?: string | null
+          phone?: string | null
+          requested_delivery?: string | null
+          role?: string | null
+          team_size?: string | null
+          variant?: string | null
+        }
+        Update: {
+          attendance_preference?: string | null
+          brokerage?: string | null
+          city?: string | null
+          created_at?: string | null
+          current_crm?: string | null
+          email?: string
+          form_type?: string
+          ghl_delivered?: boolean | null
+          id?: string
+          name?: string
+          outline_document_url?: string | null
+          phone?: string | null
+          requested_delivery?: string | null
+          role?: string | null
+          team_size?: string | null
+          variant?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
