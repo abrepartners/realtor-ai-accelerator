@@ -1,4 +1,5 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -44,7 +45,6 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const ALLOWED_FORM_TYPES = ["reserve_seat", "workshop_outline", "crm_demo", "crm_waitlist"] as const;
 type FormType = typeof ALLOWED_FORM_TYPES[number];
 
-// Env key mapping
 const WEBHOOK_ENV_KEYS: Record<FormType, string> = {
   reserve_seat:     "GHL_RESERVE_WEBHOOK_URL",
   workshop_outline: "GHL_OUTLINE_WEBHOOK_URL",
@@ -52,10 +52,18 @@ const WEBHOOK_ENV_KEYS: Record<FormType, string> = {
   crm_waitlist:     "GHL_CRM_WAITLIST_WEBHOOK_URL",
 };
 
+// Map camelCase payload fields to snake_case DB columns
+const FIELD_TO_COLUMN: Record<string, string> = {
+  attendancePreference: "attendance_preference",
+  outlineDocumentUrl: "outline_document_url",
+  requestedDelivery: "requested_delivery",
+  teamSize: "team_size",
+  currentCRM: "current_crm",
+};
+
 function sanitizeString(val: unknown): string | null {
   if (val === null || val === undefined) return null;
   if (typeof val !== "string") return null;
-  // Strip control characters and trim
   return val.replace(/[\x00-\x1F\x7F]/g, "").trim();
 }
 
@@ -89,8 +97,16 @@ function validatePayload(
     sanitized[field] = val && val !== "" ? val : null;
   }
 
-  // Reject any extra unknown fields silently (don't forward them)
   return { valid: true, sanitized };
+}
+
+function toDbRow(formType: string, sanitized: Record<string, string | null>): Record<string, unknown> {
+  const row: Record<string, unknown> = { form_type: formType };
+  for (const [key, value] of Object.entries(sanitized)) {
+    const col = FIELD_TO_COLUMN[key] || key;
+    row[col] = value;
+  }
+  return row;
 }
 
 serve(async (req) => {
@@ -124,7 +140,6 @@ serve(async (req) => {
 
   const { formType, payload } = body as Record<string, unknown>;
 
-  // Validate formType is one of the allowed values
   if (!ALLOWED_FORM_TYPES.includes(formType as FormType)) {
     return new Response(JSON.stringify({ error: "Invalid formType" }), {
       status: 400,
@@ -147,50 +162,77 @@ serve(async (req) => {
     });
   }
 
-  // Resolve webhook URL from secrets (server-side only)
+  // ── Persist lead to database ──
+  const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
+  const serviceRoleKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
+  const supabase = createClient(supabaseUrl, serviceRoleKey);
+
+  const dbRow = toDbRow(formType as string, validation.sanitized);
+
+  const { data: insertedLead, error: dbError } = await supabase
+    .from("leads")
+    .insert(dbRow)
+    .select("id")
+    .single();
+
+  if (dbError) {
+    console.error("Failed to insert lead into DB", dbError);
+    // Don't block the user — still attempt GHL delivery
+  }
+
+  // ── Attempt GHL webhook delivery ──
   const webhookUrl =
     Deno.env.get(WEBHOOK_ENV_KEYS[formType as FormType]) ??
     Deno.env.get("GHL_WEBHOOK_URL");
 
+  let ghlDelivered = false;
+  let ghlStatus: number | undefined;
+  let ghlReason: string | undefined;
+
   if (!webhookUrl) {
-    // Gracefully succeed so the user experience isn't broken when webhook isn't configured
     console.warn(`No webhook URL configured for formType: ${formType}`);
-    return new Response(JSON.stringify({ delivered: false, reason: "missing_webhook" }), {
-      status: 200,
-      headers: { ...corsHeaders, "Content-Type": "application/json" },
-    });
-  }
+    ghlReason = "missing_webhook";
+  } else {
+    try {
+      const response = await fetch(webhookUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          source: "realtor-ai-accelerator",
+          formType,
+          submittedAt: new Date().toISOString(),
+          ...validation.sanitized,
+        }),
+      });
 
-  try {
-    const response = await fetch(webhookUrl, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        source: "realtor-ai-accelerator",
-        formType,
-        submittedAt: new Date().toISOString(),
-        // pageUrl intentionally omitted — no need to forward URLs to GHL
-        ...validation.sanitized,
-      }),
-    });
-
-    if (!response.ok) {
-      console.error(`GHL webhook returned ${response.status}`);
-      return new Response(
-        JSON.stringify({ delivered: false, reason: "http_error", status: response.status }),
-        { status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" } },
-      );
+      ghlStatus = response.status;
+      if (response.ok) {
+        ghlDelivered = true;
+      } else {
+        console.error(`GHL webhook returned ${response.status}`);
+        ghlReason = "http_error";
+      }
+    } catch (err) {
+      console.error("GHL webhook fetch failed", err);
+      ghlReason = "network_error";
     }
-
-    return new Response(
-      JSON.stringify({ delivered: true, status: response.status }),
-      { status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" } },
-    );
-  } catch (err) {
-    console.error("GHL webhook fetch failed", err);
-    return new Response(
-      JSON.stringify({ delivered: false, reason: "network_error" }),
-      { status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" } },
-    );
   }
+
+  // ── Update delivery status in DB ──
+  if (insertedLead?.id && ghlDelivered) {
+    await supabase
+      .from("leads")
+      .update({ ghl_delivered: true })
+      .eq("id", insertedLead.id);
+  }
+
+  // ── Response ──
+  const result = ghlDelivered
+    ? { delivered: true, status: ghlStatus }
+    : { delivered: false, reason: ghlReason, ...(ghlStatus ? { status: ghlStatus } : {}) };
+
+  return new Response(JSON.stringify(result), {
+    status: 200,
+    headers: { ...corsHeaders, "Content-Type": "application/json" },
+  });
 });
